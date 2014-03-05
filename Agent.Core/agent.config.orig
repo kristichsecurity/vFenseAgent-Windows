@@ -1,0 +1,28 @@
+﻿<?xml version="1.0"?>
+<configuration>
+  <startup>
+    <supportedRuntime version="v2.0.50727"/>
+  </startup>
+  <!-- 
+  ***************** CHANGE AT YOUR OWN RISK!! *****************
+  Don't edit this file unless you know what you're doing. These are settings used by the TopPatch Agent. 
+  Any changes done while the agent is running could break it. You may need to restart the agent.
+  *************************************************************
+  -->
+  <appSettings>
+    <add key="ServerHostName" value="" />
+<<<<<<< HEAD
+    <add key="ServerIpAddress" value="192.168.1.1" />
+=======
+    <add key="ServerIpAddress" value="127.0.0.1" />
+>>>>>>> ca42e6b220aad8856bd84e6a5178fbfc96a8b81d
+    <add key="ServerPort" value="9001" />
+    <add key="CSRPort" value="9002" />
+    <add key="AgentPort" value="9003" />
+    <add key="StarterPort" value="9005" />
+    <add key="AgentId" value="" />
+    <add key="TopPatchCAFile" value="TopPatchCA.crt" />
+    <add key="TopPatchClientFile" value="TopPatchClientFile.pfx" />
+    <add key="LogLevel" value="info" />
+  </appSettings>
+</configuration>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<FRAGMENT Type="ReadOnly" CreateVersion="10.6" RootPath="." Language="en">
+  <COMPONENT cid="caphyon.advinst.msicomp.PreReqComponent">
+    <ROW PrereqKey="NETFramework3.5S" DisplayName=".NET Framework 3.5 SP1" VersionMin="3.5" SetupFileUrl="dotnetfx35setup.exe" Location="0" ExactSize="0" WinNTVersions="Windows 2000, Windows 2000 Service Pack 1, Windows 2000 Service Pack 2, Windows 2000 Service Pack 3, Windows 2000 Service Pack 4, Windows XP x86, Windows XP x86 Service Pack 1, Windows Server 2008 x86, Windows 8 x86, Windows 8.1 x86" WinNT64Versions="Windows Server 2008 x64, Windows Server 2008 R2 x64, Windows Server 2008 R2 x64 Service Pack 1, Windows 8 x64, Windows Server 2012 x64, Windows 8.1 x64" Operator="1" Options="m" TargetName="dotnetfx35setup.exe" Type="1" Feature="NETFramework3.5S"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.PreReqSearchComponent">
+    <ROW SearchKey="SP" Prereq="NETFramework3.5S" SearchType="9" SearchString="HKLM\SOFTWARE\Microsoft\NET Framework Setup\NDP\v3.5\SP" RefContent="M1" Order="1" MsiKey="SP" Property="PreReqSearch"/>
+    <ROW SearchKey="Version" Prereq="NETFramework3.5S" SearchType="2" SearchString="HKLM\SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\Version" VerMin="4.0" Order="2" MsiKey="Version" Property="PreReqSearch_1"/>
+    <ROW SearchKey="Version_1" Prereq="NETFramework3.5S" SearchType="2" SearchString="HKLM\SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\Version" VerMin="4.5" Order="3" MsiKey="Version_1" Property="PreReqSearch_2"/>
+  </COMPONENT>
+</FRAGMENT>

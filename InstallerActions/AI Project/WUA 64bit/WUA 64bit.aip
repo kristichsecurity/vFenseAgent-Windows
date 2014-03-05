@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<FRAGMENT Type="ReadOnly" CreateVersion="10.7.1" RootPath="." Language="en">
+  <COMPONENT cid="caphyon.advinst.msicomp.PreReqComponent">
+    <ROW PrereqKey="WUA64bit" DisplayName="WUA 64bit" VersionMin="6.2.29.0" SetupFileUrl="WindowsUpdateAgent30-x64.exe" Location="0" ExactSize="0" WinNTVersions="Windows 9x/ME/NT/2000/XP/Vista/Windows 7/Windows 8 x86/Windows 8.1 x86" WinNT64Versions="Windows 8 x64, Windows Server 2012 x64, Windows 8.1 x64" Operator="1" Options="x" TargetName="WindowsUpdateAgent30-x64.exe" Type="1" Feature="WUA64bit"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.PreReqSearchComponent">
+    <ROW SearchKey="SystemFolderwuapi.dll" Prereq="WUA64bit" SearchType="0" SearchString="[SystemFolder]wuapi.dll" VerMin="7.4.7600.226" Order="1" MsiKey="SystemFolderwuapi.dll" Property="PreReqSearch"/>
+  </COMPONENT>
+</FRAGMENT>

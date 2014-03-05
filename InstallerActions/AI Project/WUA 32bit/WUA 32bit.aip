@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<FRAGMENT Type="ReadOnly" CreateVersion="10.6" RootPath="." Language="en">
+  <COMPONENT cid="caphyon.advinst.msicomp.PreReqComponent">
+    <ROW PrereqKey="WUA32bit" DisplayName="WUA 32bit" VersionMin="6.2.29.0" SetupFileUrl="WindowsUpdateAgent30-x86.exe" Location="0" ExactSize="0" Win9xVersions="Windows 9x/ME" Operator="1" Options="i" TargetName="WindowsUpdateAgent30-x86.exe" Type="1" Feature="WUA32bit"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.PreReqSearchComponent">
+    <ROW SearchKey="SystemFolderfile.dll" Prereq="WUA32bit" SearchType="0" SearchString="[SystemFolder]file.dll" VerMin="1.0" Order="1" MsiKey="SystemFolderfile.dll" Property="PreReqSearch"/>
+  </COMPONENT>
+</FRAGMENT>

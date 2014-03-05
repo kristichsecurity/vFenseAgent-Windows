@@ -1,0 +1,1202 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Threading;
+using System.Timers;
+using Agent.Core;
+using Agent.Core.ServerOperations;
+using Agent.Core.Utils;
+using Agent.RV.Data;
+using Agent.RV.Uninstaller;
+using Agent.RV.Utils;
+using Agent.RV.WindowsApps;
+using Agent.RV.SupportedApps;
+using Agent.RV.CustomApps;
+using Agent.RV.AgentUpdater;
+using Newtonsoft.Json.Linq;
+
+
+namespace Agent.RV
+{
+    public class RvPlugin : IAgentPlugin
+    {
+        private readonly UpdateChecker _updateChecker = new UpdateChecker();
+        private static readonly WindowsUninstaller WindowsUninstaller = new WindowsUninstaller();
+        public event SendResultHandler SendResults;
+        public event RegisterOperationHandler RegisterOperation;
+        public static string PluginName
+        {
+            get { return "rv"; }
+        }
+        string IAgentPlugin.Name
+        {
+            get { return PluginName; }
+        }
+
+        public void Stop()
+        {
+<<<<<<< HEAD
+            RvSofOperation RVOperation = new RvSofOperation(operation.RawOperation);
+            RegistryReader registry = new RegistryReader();
+
+            if (RVOperation.ListOfInstalledApps.Count > 0) RVOperation.ListOfInstalledApps.Clear();
+            if (RVOperation.ListOfAppsAfterInstall.Count > 0) RVOperation.ListOfAppsAfterInstall.Clear();
+=======
+            try
+            {
+                ServiceManager.StopService("TpaMaintenance", 3000);
+                ServiceManager.StopService("TpaService", 3000);
+                Environment.Exit(0);
+            }
+            catch (Exception)
+            {
+                Environment.Exit(0);
+            }
+
+        }
+        public void Start()
+        {
+            //Make sure WUA Is up to Date
+            WUA.Run();
+            WUA.DisableAutomaticWindowsUpdates();
+            _updateChecker.Enable(SendNewUpdatesHandler);
+
+            //Disable Java, Adobe, Acrobat
+            DisableUpdaters.DisableAll();
+
+            //Check if system is Windows 8 and Disable automatic restarts
+            //after critical system updates are installed.
+            RvUtils.Windows8AutoRestart(false);
+
+        }
+>>>>>>> development
+
+  
+        /// <summary>
+        /// This takes care of executing any operation received by the server.
+        /// </summary>
+        /// <param name="operation"></param>
+        public void RunOperation(ISofOperation operation)
+        {
+            var rvOperation = new RvSofOperation(operation.RawOperation);
+
+            switch (rvOperation.Type)
+            {
+                case OperationValue.InstallWindowsUpdate:
+                    InstallWindowsUpdate(rvOperation);
+                    break;
+
+                case OperationValue.InstallSupportedApp:
+                    InstallSupportedApplication(rvOperation);
+                    break;
+
+                case OperationValue.InstallCustomApp:
+                    InstallCustomApplication(rvOperation);
+                    break;
+
+                case OperationValue.InstallAgentUpdate:
+                    InstallAgentUpdate(rvOperation);
+                    break;
+
+                case OperationValue.Uninstall:
+                    UninstallOperation(rvOperation);
+                    break;
+
+                case RvOperationValue.UpdatesAndApplications:
+                    rvOperation.Type = RvOperationValue.UpdatesAndApplications;
+                    rvOperation = UpdatesApplicationsOperation(rvOperation);
+                    rvOperation.RawResult = RvFormatter.Applications(rvOperation);
+                    rvOperation.Api = ApiCalls.RvUpdatesApplications();
+                    SendResults(rvOperation);
+                    break;
+
+                case OperationValue.ResumeOp:
+                    ResumeOperations();
+                    break;
+
+                default:
+                    Logger.Log("Received unrecognized operation. Ignoring.");
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// On every agent startup, this method runs to send the first data collection to the server.
+        /// </summary>
+        /// <returns></returns>
+        public ISofOperation InitialData()
+        {
+            var operation = new RvSofOperation();
+
+            //If some operations are left over, do not send UpdatesApplications.
+            if (Operations.OperationsRemaining()) return null;
+
+            Logger.Log("Preparing initial data.", LogLevel.Debug);
+
+            operation.Type = RvOperationValue.UpdatesAndApplications;
+            operation.Applications = NewUpdatesAndApplications();
+            operation.RawResult = RvFormatter.Applications(operation);
+            Logger.Log("Done.", LogLevel.Debug);
+            return operation;
+        }
+
+        private void InstallWindowsUpdate(RvSofOperation operation)
+        {
+            WindowsUpdates.PopulateAvailableUpdatesList();
+            WindowsUpdates.PopulateInstalledUpdatesList();
+ 
+            Operations.ParseOpDirectory();
+            if (Operations.SavedOperations != null)
+                WindowsUpdates.LoadInstallWindowsUpdateData();
+            else
+            {
+                WindowsUpdates.InstallUpdateDataList.Clear();
+                Operations.DeleteLocalUpdateBundleFolder();
+            }
+
+            foreach (var update in WindowsUpdates.InstallUpdateDataList)
+            {
+                #region Is update already installed?
+                if (WindowsUpdates.IsUpdateInstalled(update.Name))
+                {
+                    Logger.Log("Update is already installed ({0})", LogLevel.Info, update.Name);
+                    var installedUpdateResults = new RVsofResult();
+                    var installedUpdate = (from y in Operations.SavedOperations
+                                           where y.filedata_app_id == update.Id
+                                           select y).First();
+
+                    //This update is already installed, send back results and move to next.
+                    operation.Api                           = ApiCalls.RvInstallWinUpdateResults();
+                    operation.Id                            = installedUpdate.operation_id;
+                    operation.Plugin                        = "rv";
+                    installedUpdateResults.Operation        = installedUpdate.operation;
+                    installedUpdateResults.OperationId      = installedUpdate.operation_id;
+                    installedUpdateResults.RebootRequired   = false.ToString().ToLower();
+                    installedUpdateResults.AppId            = installedUpdate.filedata_app_id;
+                    installedUpdateResults.Success          = true.ToString().ToLower();
+                    installedUpdateResults.Error            = string.Empty;
+
+                    installedUpdateResults                  = WindowsUpdates.AddAppDetailsToResults(installedUpdateResults);
+                    operation.RawResult                     = RvFormatter.Install(installedUpdateResults);
+                   
+                    Operations.DeleteOperation(update.Id);
+                    Operations.DeleteLocalUpdateBundleFolder(update.Id, update.Name);
+                    Operations.DeleteFile(installedUpdate);
+                    SendResults(operation);
+                    continue; //Move on to next update.
+                }
+                #endregion
+                    //Atempt to download all required files for this specific update.
+                    var downloadResults = WindowsUpdates.DownloadUpdate(update);
+
+                    if (!String.IsNullOrEmpty(downloadResults.Error))
+                    {
+                        operation.Type = OperationValue.InstallWindowsUpdate;
+                        InstallFailedSendResults(update.Name, operation, downloadResults);
+                        Operations.DeleteLocalUpdateBundleFolder(update.Id, update.Name);
+                        continue;
+                    }
+
+                    Logger.Log("Downloaded Update OK: {0}", LogLevel.Info, update.Name);
+                    Logger.Log("Attempting to install: {0} ", LogLevel.Info, update.Name);
+
+                    //Attempt to install update and retrieve results.
+                    var results = WindowsUpdates.InstallWindowsUpdate(update);
+                        results = WindowsUpdates.AddAppDetailsToResults(results);
+
+                    //Find the matching operation saved to disk and retrieve it.
+                    var savedOperation = (from n in Operations.SavedOperations
+                                          where n.filedata_app_id == update.Id
+                                          select n).FirstOrDefault();
+
+                    //If no matching operation, assume broken; send back results for failed operation.
+                if (savedOperation == null)
+                {
+                    Logger.Log("Operation file {0} was not found, unable to send back results for update {1}.",
+                               LogLevel.Debug,
+                               update.Id, update.Name);
+                    Operations.DeleteLocalUpdateBundleFolder(update.Id, update.Name);
+                    Operations.DeleteOperation(update.Id);
+                    continue;
+                }
+                if (!String.IsNullOrEmpty(results.Error))
+                {
+                    operation.Type = OperationValue.InstallWindowsUpdate;
+                    InstallFailedSendResults(update.Name, operation, results);
+                    Operations.DeleteLocalUpdateBundleFolder(update.Id, update.Name);
+                    Operations.DeleteOperation(update.Id);
+                    Operations.DeleteFile(savedOperation);
+                    continue;
+                }
+
+                    //Now we analyze the results from install and react accordingly.
+                    if (Convert.ToBoolean(results.RebootRequired) && Convert.ToBoolean(results.Success) &&
+                        (savedOperation.restart == "optional" || savedOperation.restart == "forced"))
+                    {
+                        Operations.UpdateOperation(savedOperation, true, true, Operations.OperationStatus.Rebooting);
+                        Operations.DeleteLocalUpdateBundleFolder(update.Id, update.Name);
+                        Logger.Log("Rebooting system as per update requirement.");
+                        RvUtils.RestartSystem();
+                        Stop();
+                        //System will restart to continue Windows Update, then ResumeOperations() will
+                        //start where we left off.
+                    }
+                    else if (Convert.ToBoolean(results.RebootRequired) && !Convert.ToBoolean(results.Success) &&
+                            (savedOperation.restart == "optional" || savedOperation.restart == "forced"))
+                    {
+                        Operations.UpdateOperation(savedOperation, false, true, Operations.OperationStatus.Rebooting);
+                        Operations.DeleteLocalUpdateBundleFolder(update.Id, update.Name);
+                        Logger.Log("Rebooting system as per update requirement.");
+                        RvUtils.RestartSystem();
+                        Stop();
+                        //System will restart to continue Windows Update, then ResumeOperations() will
+                        //start where we left off.
+                    }
+                    else if (Convert.ToBoolean(results.RebootRequired) && Convert.ToBoolean(results.Success) && savedOperation.restart == "none")
+                    {
+                        operation.Api        = ApiCalls.RvInstallWinUpdateResults();
+                        operation.Id         = savedOperation.operation_id;
+                        results.Operation    = savedOperation.operation;
+                        results.OperationId  = savedOperation.operation_id;
+                        results.AppId        = savedOperation.filedata_app_id;
+                        results              = WindowsUpdates.AddAppDetailsToResults(results);
+                        operation.RawResult  = RvFormatter.Install(results);
+                       
+                        Operations.DeleteOperation(update.Id);
+                        Operations.DeleteLocalUpdateBundleFolder(update.Id, update.Name);
+                        Operations.DeleteFile(savedOperation);
+                        SendResults(operation);
+                    }
+                    else if (Convert.ToBoolean(results.RebootRequired) && !Convert.ToBoolean(results.Success) && savedOperation.restart != "none")
+                    {
+                        Operations.UpdateOperation(savedOperation, false, true, Operations.OperationStatus.Rebooting);
+                        Operations.DeleteLocalUpdateBundleFolder(update.Id, update.Name);
+                        RvUtils.RestartSystem();
+                        Stop();
+                        //System will restart to continue Windows Update, then ResumeOperations() will
+                        //start where we left off.
+                    }
+                    else if (Convert.ToBoolean(results.RebootRequired) &&  savedOperation.restart != "none")
+                    {
+                        var isInstalled = WindowsUpdates.IsUpdateInstalled(update.Name);
+                        Logger.Log("Rebooting system as per update requirement.");
+                        Operations.UpdateOperation(savedOperation, isInstalled, true, Operations.OperationStatus.Rebooting);
+                        RvUtils.RestartSystem();
+                        Stop();
+                        //System will restart to continue Windows Update, then ResumeOperations() will
+                        //start where we left off.
+                    }
+                    else
+                    {
+                        var isInstalled         = WindowsUpdates.IsUpdateInstalled(update.Name);
+                        operation.Api           = ApiCalls.RvInstallWinUpdateResults();
+                        operation.Id            = savedOperation.operation_id;
+                        results.Operation       = savedOperation.operation;
+                        results.OperationId     = savedOperation.operation_id;
+                        results.RebootRequired  = isInstalled.ToString().ToLower();
+                        results.AppId           = savedOperation.filedata_app_id;
+                        results                 = WindowsUpdates.AddAppDetailsToResults(results);
+                        operation.RawResult     = RvFormatter.Install(results);
+                        Operations.DeleteOperation(update.Id);
+                        Operations.DeleteLocalUpdateBundleFolder(update.Id, update.Name);
+                        Operations.DeleteFile(savedOperation);
+                        SendResults(operation);
+                    }
+            }
+        }
+
+        private void InstallCustomApplication(RvSofOperation operation)
+        {
+            Operations.ParseOpDirectory();
+            if (Operations.SavedOperations != null)
+                CustomAppsManager.LoadInstallCustomAppData();
+
+            var registry = new RegistryReader();
+
+            foreach (var update in CustomAppsManager.InstallCustomDataList)
+            {
+                if (operation.ListOfInstalledApps.Count > 0) operation.ListOfInstalledApps.Clear();
+                if (operation.ListOfAppsAfterInstall.Count > 0) operation.ListOfAppsAfterInstall.Clear();
+
+                //Get all installed application before installing new app.
+                operation.ListOfInstalledApps = registry.GetRegistryInstalledApplicationNames();
+
+                var downloadResults = CustomAppsManager.DownloadUpdate(update);
+
+                if (!String.IsNullOrEmpty(downloadResults.Error))
+                {
+                    operation.Type = OperationValue.InstallCustomApp;
+                    InstallFailedSendResults(update.Name, operation, downloadResults);
+                    Operations.DeleteLocalUpdateBundleFolder("", "", Settings.CustomAppDirectory);
+                    continue;
+                }
+
+                var result = CustomAppsManager.InstallCustomAppsOperation(update);
+
+                var savedOperation = (from n in Operations.SavedOperations
+                                      where n.filedata_app_id == update.Id
+                                      select n).First();
+
+                //If no matching operation, assume broken; send back results for failed operation.
+                if (savedOperation == null)
+                {
+                    Logger.Log("Operation file {0} was not found, unable to send back results for custom app {1}.", LogLevel.Debug,
+                               update.Id, update.Name);
+                    Operations.DeleteLocalUpdateBundleFolder(update.Id, update.Name);
+                    continue;
+                }
+
+                operation.ListOfAppsAfterInstall = registry.GetRegistryInstalledApplicationNames();
+
+                //GET DATA FOR APPSTOADD/APPSTODELETE
+                List<string> appListToDelete = RegistryReader.GetAppsToDelete(operation.ListOfInstalledApps, operation.ListOfAppsAfterInstall);
+                List<string> appListToAdd    = RegistryReader.GetAppsToAdd(operation.ListOfInstalledApps, operation.ListOfAppsAfterInstall);
+
+                //APPS TO DELETE
+                #region Apps to Delete
+                if (appListToDelete != null)
+                {
+                    var temp = registry.GetAllInstalledApplicationDetails();
+                    foreach (var app in appListToDelete)
+                    {
+                        var appsToDelete     = new RVsofResult.AppsToDelete2();
+                        appsToDelete.Name    = app;
+                        appsToDelete.Version = (from d in temp where d.Name == savedOperation.filedata_app_name select d.Version).First();
+                        downloadResults.AppsToDelete.Add(appsToDelete);
+                    }
+                }
+                #endregion
+
+                //APPS TO ADD 
+                #region Apps to Add
+                if (appListToAdd != null)
+                {
+                    var installedAppsDetails = registry.GetAllInstalledApplicationDetails();
+
+                        foreach (var app in appListToAdd)
+                        {
+                            var temp = new RVsofResult.AppsToAdd2();
+                            temp.AppsToAdd.Name           = app;
+                            temp.AppsToAdd.Version        = (from d in installedAppsDetails where d.Name == app select d.Version).First();
+                            temp.AppsToAdd.Description    = string.Empty;
+                            temp.AppsToAdd.InstallDate    = Tools.ConvertDateToEpoch((from d in installedAppsDetails where d.Name == app select d.Date).First());
+                            temp.AppsToAdd.RebootRequired = "no";
+                            temp.AppsToAdd.ReleaseDate    = 0.0;
+                            temp.AppsToAdd.Status         = "installed";
+                            temp.AppsToAdd.SupportUrl     = string.Empty;
+                            temp.AppsToAdd.VendorId       = string.Empty;
+                            temp.AppsToAdd.VendorName     = (from d in installedAppsDetails where d.Name == savedOperation.filedata_app_name select d.Version).First();
+                            temp.AppsToAdd.VendorSeverity = string.Empty;
+                            temp.AppsToAdd.KB             = string.Empty;
+
+                            downloadResults.AppsToAdd.Add(temp);
+                        }
+
+                }
+                #endregion
+
+                if (!String.IsNullOrEmpty(result.Error))
+                {
+                    //Failed to install
+                    operation.Type = OperationValue.InstallCustomApp;
+                    InstallFailedSendResults(update.Name, operation, result);
+                    Operations.DeleteOperation(update.Id);
+                    Operations.DeleteLocalUpdateBundleFolder("","", Settings.CustomAppDirectory);
+                    Operations.DeleteFile(savedOperation);
+                }
+                else
+                {
+                    var appDetails = (from n in downloadResults.AppsToAdd select n.AppsToAdd).First();
+                    //Installed OK
+                    result.Data.Name            = appDetails.Name;
+                    result.Data.Description     = appDetails.Description; ;
+                    result.Data.Kb              = appDetails.KB;
+                    result.Data.ReleaseDate     = appDetails.ReleaseDate;
+                    result.Data.VendorSeverity  = appDetails.VendorSeverity;
+                    result.Data.VendorName      = appDetails.VendorName;
+                    result.Data.VendorId        = appDetails.VendorId;
+                    result.Data.Version         = appDetails.Version;
+                    result.Data.SupportUrl      = appDetails.SupportUrl; 
+
+                    operation.Api           = ApiCalls.RvInstallCustomAppsResults();
+                    operation.Id            = savedOperation.operation_id;
+                    result.Operation        = savedOperation.operation;
+                    result.OperationId      = savedOperation.operation_id;
+                    result.RebootRequired   = false.ToString().ToLower();
+                    result.Success          = true.ToString().ToLower();
+                    result.Error            = string.Empty;
+
+                    operation.RawResult = RvFormatter.Install(result);
+                    Operations.DeleteOperation(update.Id);
+                    Operations.DeleteLocalUpdateBundleFolder("", "", Settings.CustomAppDirectory);
+                    Operations.DeleteFile(savedOperation);
+                    SendResults(operation);
+                }
+            }
+            
+            
+        }
+
+        private void InstallSupportedApplication(RvSofOperation operation)
+        {
+            Operations.ParseOpDirectory();
+            if (Operations.SavedOperations != null)
+                SupportedAppsManager.LoadInstallSupportedAppData();
+
+            var registry = new RegistryReader();
+
+            foreach (var update in SupportedAppsManager.InstallSupportedDataList)
+            {
+                var savedOperation = (from n in Operations.SavedOperations 
+                                      where n.filedata_app_id == update.Id 
+                                      select n).FirstOrDefault();
+
+                if (operation.ListOfInstalledApps.Count > 0) operation.ListOfInstalledApps.Clear();
+                if (operation.ListOfAppsAfterInstall.Count > 0) operation.ListOfAppsAfterInstall.Clear();
+
+                //Get all installed application before installing..
+                operation.ListOfInstalledApps = registry.GetRegistryInstalledApplicationNames();
+
+                Logger.Log("Preparing to Install {0}", LogLevel.Info, update.Name);
+                var downloadResults = SupportedAppsManager.DownloadUpdate(update);
+
+                //If download fails, send back results to server and move to next package (if any)
+                if (!String.IsNullOrEmpty(downloadResults.Error))
+                {
+                    operation.Type = OperationValue.InstallSupportedApp;
+                    InstallFailedSendResults(update.Name, operation, downloadResults);
+
+                    Operations.DeleteOperation(update.Id);
+                    Operations.DeleteLocalUpdateBundleFolder("", "", Settings.SupportedAppDirectory);
+                    Operations.DeleteFile(savedOperation);
+                    continue;
+                }
+
+                //Attempt to install supported app and grab results.
+                Logger.Log("Download completed for {0}", LogLevel.Info, update.Name);
+                var result = SupportedAppsManager.InstallSupportedAppsOperation(update);
+
+                //If no matching operation, assume broken; send back results for failed operation.
+                if (savedOperation == null)
+                {
+                    Logger.Log("Operation file {0} was not found, unable to send back results for supported app {1}.", LogLevel.Debug,
+                               update.Id, update.Name);
+                    Operations.DeleteOperation(update.Id);
+                    Operations.DeleteLocalUpdateBundleFolder(update.Id, update.Name);
+                    Operations.DeleteFile(savedOperation);
+                    continue;
+                }
+
+                //Get all installed application after installing..
+                operation.ListOfAppsAfterInstall = registry.GetRegistryInstalledApplicationNames();
+
+                //GET DATA FOR APPSTOADD/APPSTODELETE
+                var appListToDelete = RegistryReader.GetAppsToDelete(operation.ListOfInstalledApps, operation.ListOfAppsAfterInstall);
+                var appListToAdd    = RegistryReader.GetAppsToAdd(operation.ListOfInstalledApps, operation.ListOfAppsAfterInstall);
+
+                //APPS TO DELETE
+                #region Apps to Delete
+                if (appListToDelete != null)
+                {
+                    var temp = registry.GetAllInstalledApplicationDetails();
+                    foreach (var app in appListToDelete)
+                    {
+                        var appsToDelete        = new RVsofResult.AppsToDelete2();
+                        appsToDelete.Name       = app;
+                        appsToDelete.Version    = (from d in temp where d.Name == savedOperation.filedata_app_name select d.Version).First();
+                        result.AppsToDelete.Add(appsToDelete);
+                    }
+                }
+                #endregion
+
+                //APPS TO ADD 
+                #region Apps to Add
+                if (appListToAdd != null)
+                {
+                    var installedAppsDetails = registry.GetAllInstalledApplicationDetails();
+
+                    foreach (var app in appListToAdd)
+                    {
+                        var localApp = app;
+                        var temp = new RVsofResult.AppsToAdd2();
+                        temp.AppsToAdd.Name = localApp;
+                        temp.AppsToAdd.Version = (from d in installedAppsDetails where d.Name == savedOperation.filedata_app_name select d.Version).First();
+                        temp.AppsToAdd.Description = string.Empty;
+                        temp.AppsToAdd.InstallDate = Tools.ConvertDateToEpoch((from d in installedAppsDetails where d.Name == localApp select d.Date).First());
+                        temp.AppsToAdd.RebootRequired = "no";
+                        temp.AppsToAdd.ReleaseDate    = 0.0;
+                        temp.AppsToAdd.Status         = "installed";
+                        temp.AppsToAdd.SupportUrl     = string.Empty;
+                        temp.AppsToAdd.VendorId       = string.Empty;
+                        temp.AppsToAdd.VendorName = (from d in installedAppsDetails where d.Name == localApp select d.VendorName).First();
+                        temp.AppsToAdd.VendorSeverity = string.Empty;
+                        temp.AppsToAdd.KB             = string.Empty;
+
+                        result.AppsToAdd.Add(temp);
+                    }
+                }
+                #endregion
+
+                if (!String.IsNullOrEmpty(result.Error) && appListToAdd == null)
+                {
+                    //Failed to install
+                    operation.Type = OperationValue.InstallSupportedApp;
+                    InstallFailedSendResults(update.Name, operation, result);
+                    Operations.DeleteLocalUpdateBundleFolder("", "", Settings.SupportedAppDirectory);
+                    Operations.DeleteOperation(update.Id);
+                }
+                else
+                {
+                    //Installed OK
+                    var installedAppsDetails    = registry.GetAllInstalledApplicationDetails();
+                    result.Data.Name            = savedOperation.filedata_app_name;
+                    result.Data.Description     = String.Empty;
+                    result.Data.Kb              = String.Empty;
+                    result.Data.ReleaseDate     = Tools.ConvertDateToEpoch((from d in installedAppsDetails where d.Name == savedOperation.filedata_app_name select d.Date).First());
+                    result.Data.VendorSeverity  = String.Empty;
+                    result.Data.VendorName      = String.Empty;
+                    result.Data.VendorId        = String.Empty;
+                    result.Data.Version         = (from d in installedAppsDetails where d.Name == savedOperation.filedata_app_name select d.Version).First();
+                    result.Data.SupportUrl      = String.Empty;
+                    result.Operation        = savedOperation.operation;
+                    result.OperationId      = savedOperation.operation_id;
+                    result.RebootRequired   = false.ToString().ToLower();
+                    result.Success          = true.ToString().ToLower();
+                    result.Error            = string.Empty;
+
+                    operation.Api = ApiCalls.RvInstallSupportedAppsResults();
+                    operation.Id = savedOperation.operation_id;
+                    operation.Plugin = "rv";
+                    operation.Type = OperationValue.InstallSupportedApp;
+                    operation.RawResult = RvFormatter.Install(result);
+
+                    Operations.DeleteOperation(update.Id);
+                    Operations.DeleteLocalUpdateBundleFolder("", "", Settings.SupportedAppDirectory);
+                    Operations.DeleteFile(savedOperation);
+                    SendResults(operation);
+                }
+            }
+            
+        }
+
+        private void InstallAgentUpdate(RvSofOperation operation)
+        {
+            var submittedInstall   = false;
+            var counter            = 30;
+            var registry           = new RegistryReader();
+
+            Operations.ParseOpDirectory();
+            if (Operations.SavedOperations == null)
+                return;
+            AgentUpdateManager.LoadInstallAgentUpdateData();
+
+            var downloadResults = AgentUpdateManager.DownloadUpdate(AgentUpdateManager.InstallAgentUpdateData.FirstOrDefault());
+
+            if (String.IsNullOrEmpty(downloadResults.Error))
+            {
+                do
+                {
+                    var updateOperation = Operations.SavedOperations.FirstOrDefault(p => p.operation == "install_agent_update");
+
+                    if (updateOperation != null)
+                    {
+                        switch (updateOperation.operation_status)
+                        {
+                            case Operations.OperationStatus.Process:
+                                if (submittedInstall) break;
+
+                                Logger.Log("Agent Updater Application, preparing to upgrade RV Agent to the most recent version.");
+                                var startInfo = new ProcessStartInfo();
+                                var fileData = from n in updateOperation.filedata_app_uris select n;
+                                string fileName = String.Empty;
+
+                                foreach (var item in fileData)
+                                {
+                                    var splitted = item.file_name.Split(new[] {'.'});
+                                    if (splitted[0] == "UpdateInstaller")
+                                        fileName = item.file_name;
+                                }
+
+                                if (String.IsNullOrEmpty(fileName))
+                                    fileName = "UpdateInstaller.exe";
+
+                                var filePath = Path.Combine(AgentUpdateManager.AgentUpdateDirectory, fileName);
+
+                                startInfo.FileName               = filePath;
+                                startInfo.Arguments              = updateOperation.filedata_app_clioptions;
+                                startInfo.UseShellExecute        = false;
+                                startInfo.RedirectStandardOutput = false;
+
+                                Process.Start(startInfo);
+                                submittedInstall = true;
+                                break;
+                        }
+                    }
+
+                    Thread.Sleep(5000);
+                    counter--;
+                } while (counter >= 0);
+            }
+            else if (!String.IsNullOrEmpty(downloadResults.Error))
+            {
+                //Send back error message
+                //Agent Update Installed FAILED
+                Operations.ParseOpDirectory();
+                
+                if (Operations.SavedOperations != null)
+                {
+                    AgentUpdateManager.LoadInstallAgentUpdateData();
+                    var savedOperation = (from n in Operations.SavedOperations
+                                          where n.operation == OperationValue.InstallAgentUpdate
+                                          select n).FirstOrDefault();
+
+                    if (savedOperation != null)
+                    {
+                        var result = new RVsofResult();
+                        result.Data.Name = savedOperation.filedata_app_name;
+                        result.Data.Description = String.Empty;
+                        result.Data.Kb = String.Empty;
+                        result.Data.ReleaseDate = 0.0;
+                        result.Data.VendorSeverity = String.Empty;
+                        result.Data.VendorName = String.Empty;
+                        result.Data.VendorId = String.Empty;
+                        result.Data.Version = String.Empty;
+                        result.Data.SupportUrl = String.Empty;
+
+                        operation.Api = ApiCalls.RvInstallAgentUpdateResults();
+                        operation.Id = savedOperation.operation_id;
+                        result.AppId = savedOperation.filedata_app_id;
+                        result.Operation = savedOperation.operation;
+                        result.OperationId = savedOperation.operation_id;
+                        result.RebootRequired = false.ToString().ToLower();
+                        result.Success = false.ToString().ToLower();
+                        result.Error = downloadResults.Error;
+                        operation.RawResult = RvFormatter.AgentUpdate(result);
+
+                        Operations.DeleteOperation(savedOperation.operation_id);
+                        Operations.DeleteFile(savedOperation);
+                        SendResults(operation);
+                    }
+                    Logger.Log("Update failed to install, Error: {0}. Agent was unable to send back results to server due to operation not found in root operation folder.", LogLevel.Warning, downloadResults.Error );  
+                }
+                else
+                {
+                    Logger.Log("Update failed to install, Error: {0}. Agent was unable to send back results to server due to operation not found in root operation folder.", LogLevel.Warning, downloadResults.Error);  
+                }
+               
+            }
+
+            //Prepare to send Back Results
+            /////////////////////////////////////////////////////////////////////
+            Operations.ParseOpDirectory();
+            if (Operations.SavedOperations != null)
+            {
+                var savedOperation = Operations.SavedOperations.FirstOrDefault(p => p.operation == "install_agent_update");
+
+                if (savedOperation != null && savedOperation.operation_status == Operations.OperationStatus.Installed)
+                {
+                    //Agent Update Installed send back Results
+                    //Installed OK
+                    var result                 = new RVsofResult();
+                    var installedAppsDetails =  registry.GetAllInstalledApplicationDetails();
+
+                    result.Data.Name           = savedOperation.filedata_app_name;
+                    result.Data.Description    = String.Empty;
+                    result.Data.Kb             = String.Empty;
+                    result.Data.ReleaseDate    = Tools.ConvertDateToEpoch((from d in installedAppsDetails where d.Name == savedOperation.filedata_app_name select d.Date).First());
+                    result.Data.VendorSeverity = String.Empty;
+                    result.Data.VendorName     = String.Empty;
+                    result.Data.VendorId       = String.Empty;
+                    result.Data.Version        = (from d in installedAppsDetails where d.Name == savedOperation.filedata_app_name select d.Version).First();
+                    result.Data.SupportUrl     = String.Empty;
+
+                    operation.Api              = ApiCalls.RvInstallAgentUpdateResults();
+                    operation.Id               = savedOperation.operation_id;
+                    result.AppId               = savedOperation.filedata_app_id;
+                    result.Operation           = savedOperation.operation;
+                    result.OperationId         = savedOperation.operation_id;
+                    result.RebootRequired      = false.ToString().ToLower();
+                    result.Success             = true.ToString().ToLower();
+                    result.Error               = string.Empty;
+
+                    operation.RawResult = RvFormatter.AgentUpdate(result);
+                    Operations.DeleteOperation(savedOperation.operation_id);
+                    Operations.DeleteFile(savedOperation);
+                    SendResults(operation);
+                }
+                else
+                {
+                    //Agent Update Installed send back Results
+                    //Installed FAILED
+                    var result                 = new RVsofResult();
+                    result.Data.Name = savedOperation != null ? savedOperation.filedata_app_name : "TopPatch Agent";
+                    result.Data.Description    = String.Empty;
+                    result.Data.Kb             = String.Empty;
+                    result.Data.ReleaseDate    = 0.0;
+                    result.Data.VendorSeverity = String.Empty;
+                    result.Data.VendorName     = String.Empty;
+                    result.Data.VendorId       = String.Empty;
+                    result.Data.Version        = String.Empty;
+                    result.Data.SupportUrl     = String.Empty;
+
+                    operation.Api              = ApiCalls.RvInstallAgentUpdateResults();
+                    operation.Id               = savedOperation.operation_id;
+                    result.AppId               = savedOperation.filedata_app_id;
+                    result.Operation           = savedOperation.operation;
+                    result.OperationId         = savedOperation.operation_id;
+                    result.RebootRequired      = false.ToString().ToLower();
+                    result.Success             = false.ToString().ToLower();
+                    result.Error               = savedOperation.error;
+
+                    operation.RawResult        = RvFormatter.AgentUpdate(result);
+                    Operations.DeleteOperation(savedOperation.operation_id);
+                    Operations.DeleteFile(savedOperation);
+                    SendResults(operation);
+                }
+            }
+        }
+
+        private void UninstallOperation(RvSofOperation operation)
+        {
+            Operations.ParseOpDirectory();
+            if (Operations.SavedOperations == null) return;
+
+            var localOperation = from n in Operations.SavedOperations where n.operation == "uninstall" select n;
+
+            foreach (var localOp in localOperation)
+            {
+                var installedUpdates = WindowsUpdates.GetInstalledUpdates();
+                var update = (from n in installedUpdates where n.Name == localOp.filedata_app_name select n).FirstOrDefault();
+                   
+                // Make sure to set all results properties or the previous value will roll over
+                // to the next update's results!!
+                var results = new RVsofResult();
+
+                var uninstallerResults = WindowsUninstaller.Uninstall(update);
+                if (uninstallerResults.Success)
+                {
+                    // Success! Uinstalled OK
+                    results.Success             = true.ToString().ToLower();
+                    results.RebootRequired      = uninstallerResults.Restart.ToString();
+                    results.Error               = string.Empty;
+                    results.AppId               = localOp.filedata_app_id;
+                    results.Data.Name           = (String.IsNullOrEmpty(update.Name) ? String.Empty : update.Name);
+                    results.Data.Description    = update.Description;
+                    results.Data.Kb             = String.Empty;
+                    results.Data.ReleaseDate    = 0.0;
+                    results.Data.VendorSeverity = update.VendorSeverity;
+                    results.Data.VendorName     = update.VendorName;
+                    results.Data.VendorId       = update.VendorId;
+                    results.Data.Version        = update.Version;
+                    results.Data.SupportUrl     = update.SupportUrl;
+
+                    operation.Api               = ApiCalls.RvUninstallOperation();
+                    operation.Id                = localOp.operation_id;
+                    results.Operation           = localOp.operation;
+                    results.OperationId         = localOp.operation_id;
+                    
+                    operation.RawResult         = RvFormatter.Install(results);
+                    Operations.DeleteOperation(localOp.app_id);
+                    Operations.DeleteFile(localOp);
+                    SendResults(operation);
+                }
+                else
+                {
+                    // Fail! Uinstalled Failed.
+                    results.Success             = false.ToString().ToLower();
+                    results.RebootRequired      = uninstallerResults.Restart.ToString();
+                    results.Error               = uninstallerResults.Message;
+                    results.AppId               = localOp.filedata_app_id;
+
+                    results.Data.Name           = String.Empty;
+                    results.Data.Description    = String.Empty;
+                    results.Data.Kb             =   String.Empty;
+                    results.Data.ReleaseDate    = 0.0;
+                    results.Data.VendorSeverity = String.Empty;
+                    results.Data.VendorName     = String.Empty;
+                    results.Data.VendorId       = String.Empty;
+                    results.Data.Version        = String.Empty;
+                    results.Data.SupportUrl     = String.Empty;
+
+                    operation.Api               = ApiCalls.RvUninstallOperation();
+                    operation.Id                = localOp.operation_id;
+                    results.Operation           = localOp.operation;
+                    results.OperationId         = localOp.operation_id;
+
+                    operation.RawResult = RvFormatter.Install(results);
+                    Operations.DeleteOperation(localOp.app_id);
+                    Operations.DeleteFile(localOp);
+                    SendResults(operation);
+                }  
+            }
+        }
+
+        private void ResumeOperations()
+        {
+            var results = new RVsofResult();
+            Logger.Log("Checking for any results to send back from previous operations.");
+            Operations.ParseOpDirectory();
+            if (Operations.SavedOperations == null || String.IsNullOrEmpty(Settings.AgentId))
+            {
+                Logger.Log("Done.");
+                return;
+            }
+
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            //Check operations that previously rebooted system, then send results.
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            var localItems = (from n in Operations.SavedOperations
+                              where n.success.ToLower() == "true"
+                              select n).ToList();
+
+            Logger.Log("Found {0} operations that need results sent back.", LogLevel.Info, localItems.Count());
+            #region Need results sent back
+            foreach (var localItem in localItems)
+                {
+                    Logger.Log("Sending back results for Update: {0}", LogLevel.Info, localItem.filedata_app_name);
+                    switch (localItem.operation)
+                    {
+                        case RvOperationValue.InstallWindowsUpdate:
+                            WindowsUpdates.LoadInstallWindowsUpdateData();
+                            var operation = new RvSofOperation();
+                            operation.Api           = ApiCalls.RvInstallWinUpdateResults();
+                            operation.Id            = localItem.operation_id;
+                            operation.Plugin        = "rv";
+                            results.Operation       = localItem.operation;
+                            results.OperationId     = localItem.operation_id;
+                            results.AppId           = localItem.filedata_app_id;
+                            results.Success         = WindowsUpdates.IsUpdateInstalled(localItem.filedata_app_name).ToString().ToLower();
+                            results.RebootRequired  = false.ToString().ToLower();
+                            results.Data.Name       = localItem.filedata_app_name;
+                            results                 = WindowsUpdates.AddAppDetailsToResults(results);
+
+                            operation.RawResult     = RvFormatter.Install(results);
+                            SendResults(operation);
+                            Logger.Log("Results sent back to RV Server for: {0}", LogLevel.Info, localItem.filedata_app_name);
+
+                            Operations.DeleteFile(localItem);
+                            break;
+
+                        case RvOperationValue.InstallCustomApp:
+                            CustomAppsManager.LoadInstallCustomAppData();
+                            var customAppOperation = new RvSofOperation();
+                            customAppOperation.Api    = ApiCalls.RvInstallCustomAppsResults();
+                            customAppOperation.Id     = localItem.operation_id;
+                            customAppOperation.Plugin = "rv";
+                            results.Operation         = localItem.operation;
+                            results.OperationId       = localItem.operation_id;
+                            results.AppId             = localItem.filedata_app_id;
+                            results.Success           = localItem.success;
+                            results.RebootRequired    = false.ToString().ToLower();
+                            results.Data.Name         = localItem.filedata_app_name;
+                            results.Error             = "";
+                            results                   = CustomAppsManager.AddAppDetailsToResults(results);
+
+                            customAppOperation.RawResult = RvFormatter.Install(results);
+                            SendResults(customAppOperation);
+                            Logger.Log("Results sent back to RV Server for: {0}", LogLevel.Info, localItem.filedata_app_name);
+
+                            Operations.DeleteFile(localItem);
+                            break;
+
+                        case RvOperationValue.InstallSupportedApp:
+                            SupportedAppsManager.LoadInstallSupportedAppData();
+                            var supportedAppOperation = new RvSofOperation();
+                            supportedAppOperation.Api    = ApiCalls.RvInstallSupportedAppsResults();
+                            supportedAppOperation.Id     = localItem.operation_id;
+                            supportedAppOperation.Plugin = "rv";
+                            results.Operation            = localItem.operation;
+                            results.OperationId          = localItem.operation_id;
+                            results.AppId                = localItem.filedata_app_id;
+                            results.Success              = localItem.success;
+                            results.RebootRequired       = false.ToString().ToLower();
+                            results.Data.Name            = localItem.filedata_app_name;
+                            results.Error                = "";
+                            results                      = SupportedAppsManager.AddAppDetailsToResults(results);
+
+                            supportedAppOperation.RawResult = RvFormatter.Install(results);
+                            SendResults(supportedAppOperation);
+                            Logger.Log("Results sent back to RV Server for: {0}", LogLevel.Info, localItem.filedata_app_name);
+
+                            Operations.DeleteFile(localItem);
+                            break;
+                    }
+                }
+            #endregion
+
+                 
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            //Check for Agent Update operation to send back results.
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            var completedAgentUpdate = (from n in Operations.SavedOperations
+                                        where n.operation_status == Operations.OperationStatus.Installed 
+                                        && n.operation == OperationValue.InstallAgentUpdate
+                                        select n);
+            var localItems2 = completedAgentUpdate as IList<Operations.SavedOpData> ?? completedAgentUpdate.ToList();
+            Logger.Log("Found {0} Agent update operation.", LogLevel.Info, localItems2.Count());
+            #region Agent update needs results sent back
+            foreach (var localItem in localItems2)
+            {
+                    Logger.Log("Sending back results for Agent Update: {0}", LogLevel.Info, localItem.filedata_app_name);
+
+                            AgentUpdateManager.LoadInstallAgentUpdateData();
+                            var operation1 = new RvSofOperation();
+                            operation1.Api         = ApiCalls.RvInstallAgentUpdateResults();
+                            operation1.Id          = localItem.operation_id;
+                            operation1.Plugin      = "rv";
+                            results.Operation      = localItem.operation;
+                            results.OperationId    = localItem.operation_id;
+                            results.AppId          = localItem.filedata_app_id;
+                            results.Success        = localItem.success;
+                            results.RebootRequired = false.ToString().ToLower();
+                            results.Data.Name      = localItem.filedata_app_name;
+                            results                = AgentUpdateManager.AddAppDetailsToResults(results);
+
+                            operation1.RawResult = RvFormatter.AgentUpdate(results);
+                            SendResults(operation1);
+                            Logger.Log("Results sent back to RV Server for: {0}", LogLevel.Info, localItem.filedata_app_name);
+
+                            Operations.DeleteFile(localItem);
+                            break;
+            }
+            #endregion
+
+
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            //Check any remaining operations and resume install.
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            Logger.Log("Checking for any unfinished operations that need processing.");
+            #region Process remaining operations
+            foreach (var operationType in Operations.SavedOperations)
+            {
+                     switch (operationType.operation)
+                     {
+                         case OperationValue.InstallWindowsUpdate:
+                             var winUpdateOperation = new RvSofOperation();
+                             winUpdateOperation.Type = OperationValue.InstallWindowsUpdate;
+                             winUpdateOperation.Api = ApiCalls.RvInstallWinUpdateResults();
+                             winUpdateOperation.Id = operationType.operation_id;
+                             winUpdateOperation.Plugin = "rv";
+                             Logger.Log("Added os update operation to queue, for {0}..", LogLevel.Info, operationType.filedata_app_name);
+                             RegisterOperation(winUpdateOperation);
+                             break;
+
+                         case OperationValue.InstallCustomApp:
+                             var customAppOperation = new RvSofOperation();
+                             customAppOperation.Type = OperationValue.InstallCustomApp;
+                             customAppOperation.Api = ApiCalls.RvInstallCustomAppsResults();
+                             customAppOperation.Id = operationType.operation_id;
+                             customAppOperation.Plugin = "rv";
+                             Logger.Log("Added custom app operation to queue, for {0}..", LogLevel.Info, operationType.filedata_app_name);
+                             RegisterOperation(customAppOperation);
+                             break;
+
+                         case OperationValue.InstallSupportedApp:
+                             var supportedAppOperation = new RvSofOperation();
+                             supportedAppOperation.Type = OperationValue.InstallSupportedApp;
+                             supportedAppOperation.Api = ApiCalls.RvInstallSupportedAppsResults();
+                             supportedAppOperation.Id = operationType.operation_id;
+                             supportedAppOperation.Plugin = "rv";
+                             Logger.Log("Added supported app operation to queue, for {0}..", LogLevel.Info, operationType.filedata_app_name);
+                             RegisterOperation(supportedAppOperation);
+                             break;
+
+                         case OperationValue.Uninstall:
+                             var uninstallOperation = new RvSofOperation();
+                             uninstallOperation.Type = OperationValue.Uninstall;
+                             uninstallOperation.Api = ApiCalls.RvUninstallOperation();
+                             uninstallOperation.Id = operationType.operation_id;
+                             uninstallOperation.Plugin = "rv";
+                             Logger.Log("Added uninstall app operation to queue, for {0}..", LogLevel.Info, operationType.filedata_app_name);
+                             RegisterOperation(uninstallOperation);
+                             break;
+
+                         case OperationValue.InstallAgentUpdate:
+                             var agentUpdateOperation    = new RvSofOperation();
+                             var localOperation          = Operations.SavedOperations.First();
+
+                             agentUpdateOperation.Type   = OperationValue.InstallAgentUpdate;
+                             agentUpdateOperation.Api    = ApiCalls.RvInstallAgentUpdateResults();
+                             agentUpdateOperation.Id     = operationType.operation_id;
+                             agentUpdateOperation.Plugin = "rv";
+
+                             var result                  = new RVsofResult();
+                             var registry                = new RegistryReader();
+                             var listOfInstalledPrograms = registry.GetAllInstalledApplicationDetails();
+                             var matchedApp              = (from n in listOfInstalledPrograms where n.Name == localOperation.filedata_app_name select n).FirstOrDefault();
+                             
+                             if (String.IsNullOrEmpty(localOperation.error)  && matchedApp.Name != null)
+                             {
+                                 switch (localOperation.operation_status)
+                                 {
+                                         case Operations.OperationStatus.Installed:
+                                                 //Installed OK
+                                                 Logger.Log("Agent update installed successfully.");
+                                                 result.Data.Name           = localOperation.filedata_app_name;
+                                                 result.Data.Description    = String.Empty;
+                                                 result.Data.Kb             = String.Empty;
+                                                 result.Data.ReleaseDate    = Tools.ConvertDateToEpoch(matchedApp.Date);
+                                                 result.Data.VendorSeverity = String.Empty;
+                                                 result.Data.VendorName     = matchedApp.VendorName;
+                                                 result.Data.VendorId       = String.Empty;
+                                                 result.Data.Version        = matchedApp.Version;
+                                                 result.Data.SupportUrl     = String.Empty;
+
+                                                 agentUpdateOperation.Api   = ApiCalls.RvInstallAgentUpdateResults();
+                                                 agentUpdateOperation.Id    = localOperation.operation_id;
+                                                 result.AppId               = localOperation.filedata_app_id;
+                                                 result.Operation           = localOperation.operation;
+                                                 result.OperationId         = localOperation.operation_id;
+                                                 result.RebootRequired      = false.ToString().ToLower();
+                                                 result.Success             = true.ToString().ToLower();
+
+                                                 result.Error = String.Empty;
+
+                                                 agentUpdateOperation.RawResult = RvFormatter.AgentUpdate(result);
+                                                 Operations.DeleteOperation(localOperation.app_id);
+                                                 Operations.DeleteFile(localOperation);
+                                                 SendResults(agentUpdateOperation);
+                                              break;
+
+                                         case Operations.OperationStatus.Pending:
+                                         case Operations.OperationStatus.Process:
+                                              RegisterOperation(agentUpdateOperation);
+                                              break;
+
+                                         case Operations.OperationStatus.Failed:
+                                                  //Installed Failed
+                                                  Logger.Log("Failed to install agent Update.", LogLevel.Warning);
+                                                  agentUpdateOperation.Api = ApiCalls.RvInstallAgentUpdateResults();
+                                                  agentUpdateOperation.Id  = localOperation.operation_id;
+                                                  result.AppId             = localOperation.filedata_app_id;
+                                                  result.Operation         = localOperation.operation;
+                                                  result.OperationId       = localOperation.operation_id;
+                                                  result.RebootRequired    = false.ToString().ToLower();
+                                                  result.Success           = false.ToString().ToLower();
+                                                  result.Error             = "Agent upgrade did not go through. Please refer to log file for additional details.";
+
+                                                  agentUpdateOperation.RawResult = RvFormatter.AgentUpdate(result);
+                                                  Operations.DeleteOperation(localOperation.app_id);
+                                                  Operations.DeleteFile(localOperation);
+                                                  SendResults(agentUpdateOperation);
+                                              break;
+                                 }
+                             }
+                             else
+                             {
+                                 //Installed Failed
+                                 Logger.Log("Failed to install agent Update, no operation status was found.",LogLevel.Warning);
+                                 agentUpdateOperation.Api = ApiCalls.RvInstallAgentUpdateResults();
+                                 agentUpdateOperation.Id  = localOperation.operation_id;
+                                 result.AppId             = localOperation.filedata_app_id;
+                                 result.Operation         = localOperation.operation;
+                                 result.OperationId       = localOperation.operation_id;
+                                 result.RebootRequired    = false.ToString().ToLower();
+                                 result.Success           = false.ToString().ToLower();
+                                 result.Error             = "Agent upgrade did not go through. Please refer to log file for additional details.";
+
+                                 agentUpdateOperation.RawResult = RvFormatter.AgentUpdate(result);
+
+                                 Operations.DeleteOperation(localOperation.app_id);
+                                 Operations.DeleteFile(localOperation);
+                                 SendResults(agentUpdateOperation);
+                             }
+                             break;
+                     }
+            }
+            #endregion
+
+        }
+
+        private void InstallFailedSendResults(string appName, ISofOperation operation, RVsofResult results)
+        {
+            try
+            {
+                Operations.ParseOpDirectory();
+                var savedOperation = (from n in Operations.SavedOperations
+                                      where n.filedata_app_name == appName
+                                      select n).FirstOrDefault();
+
+                if (savedOperation != null)
+                {
+                    operation.Id        = (savedOperation.operation_id ?? String.Empty);
+                    results.Operation   = (savedOperation.operation ?? String.Empty);
+                    results.OperationId = (savedOperation.operation_id ?? String.Empty);
+                    results.AppId       = (savedOperation.filedata_app_id ?? String.Empty);
+                }
+                else
+                {
+                    Logger.Log("Operation file was not found, unable to send back results for update {1}.", LogLevel.Debug, appName);
+                    return;
+                }
+
+                results.RebootRequired  = false.ToString().ToLower();
+                operation.Plugin = "rv";
+               
+
+                switch (operation.Type)
+                {
+                    case OperationValue.InstallWindowsUpdate:
+                        operation.Api = ApiCalls.RvInstallWinUpdateResults();
+                        results = WindowsUpdates.AddAppDetailsToResults(results);
+                        break;
+
+                    case OperationValue.InstallCustomApp:
+                        operation.Api = ApiCalls.RvInstallCustomAppsResults();
+                        results = CustomAppsManager.AddAppDetailsToResults(results);
+                        break;
+
+                    case OperationValue.InstallSupportedApp:
+                        operation.Api = ApiCalls.RvInstallSupportedAppsResults();
+                        results = SupportedAppsManager.AddAppDetailsToResults(results);
+                        break;
+
+                    case OperationValue.InstallAgentUpdate:
+                        operation.Api = ApiCalls.RvInstallAgentUpdateResults();
+                        results = AgentUpdateManager.AddAppDetailsToResults(results);
+                        break;
+                }
+
+                operation.RawResult = RvFormatter.Install(results);
+                SendResults(operation);
+            }
+            catch (Exception e)
+            {
+                Logger.Log("Failed when attempting to send back results for an operation that failed. Possible null on savedOperation object.");
+                Logger.LogException(e);
+            }
+        }
+
+        private static RvSofOperation UpdatesApplicationsOperation(RvSofOperation operation)
+        {
+            operation.Applications = NewUpdatesAndApplications();
+            return operation;
+        }
+
+        private static List<Application> NewUpdatesAndApplications()
+        {
+            var applications = new List<Application>();
+
+            applications.AddRange(WindowsUpdates.GetAvailableUpdates());
+            applications.AddRange(WindowsUpdates.GetInstalledUpdates());
+            applications.AddRange(SupportedAppsManager.GetInstalledApplications());
+
+            return applications;
+        }
+
+        private void SendNewUpdatesHandler(object sender, ElapsedEventArgs e)
+        {
+            var operation = new SofOperation
+                {
+                    Plugin = "rv",
+                    Type   = RvOperationValue.UpdatesAndApplications,
+                    Api    = ApiCalls.RvUpdatesApplications()
+                };
+
+            RegisterOperation(operation);
+            RunOperation(operation);
+        }
+    }
+}

@@ -1,0 +1,353 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using Microsoft.Win32;
+
+<<<<<<< HEAD
+namespace Agent.Core.Utils {
+
+    public class RegistryReader 
+=======
+namespace Agent.Core.Utils
+{
+
+    public class RegistryReader
+>>>>>>> dayan_https_oldoperations
+    {
+        private string Regx64Apps64 = "Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall";
+        private string Regx64Apps32 = "Software\\Wow6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall";
+        private string RegX86Apps32 = "Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall";
+
+        /// <summary>
+        /// Obtain the set between two lists
+        /// </summary>
+        /// <param name="Installed"></param>
+        /// <param name="NewList"></param>
+        /// <returns>List of Unique Application Names</returns>
+        public List<string> GetSetFromTwoLists(IEnumerable<string> Installed, IEnumerable<string> NewList)
+        {
+            IEnumerable<string> applicationNames = NewList.Except(Installed);
+            return applicationNames.ToList();
+        }
+
+        /// <summary>
+        /// Obtain a list of Installed Applications, Just the Application Name.
+        /// Method obtains list from 32bit Installed Apps and then a list from 64bit Apps.
+        /// Removes any duplicates between both Lists and Apps with no name.
+        /// </summary>
+        /// <returns>List of Application Names</returns>
+        public List<string> GetRegistryInstalledApplicationNames()
+        {
+            string[] RegistryValuesToRead = { "DisplayName" };
+            List<string> AllApps = new List<string>();
+
+            if (Environment.GetEnvironmentVariable("PROCESSOR_ARCHITECTURE") == "x86"
+                && Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432") == null)
+            {
+                //32BIT SYSTEM
+                /////////////////
+                var x86AppList = new List<string>(); ;
+
+                //Get value from dictionary and store in X64Apps64List
+                foreach (Dictionary<string, string> EachDict in GetRegistryKeyValues(RegX86Apps32, RegistryValuesToRead))
+                    x86AppList.AddRange(from entry in EachDict where entry.Key == RegistryValuesToRead[0] select entry.Value);
+
+                AllApps.AddRange(x86AppList);
+            }
+            else
+            {
+                //64BIT SYSTEM
+                ////////////////
+                List<string> x64Apps64List = new List<string>();
+                List<string> x64Apps32List = new List<string>();
+
+                //Get value from dictionary and store in X64Apps64List
+                foreach (Dictionary<string, string> EachDict in GetRegistryKeyValues(Regx64Apps64, RegistryValuesToRead))
+                {
+                    x64Apps64List.AddRange(from entry in EachDict where entry.Key == RegistryValuesToRead[0] select entry.Value);
+                }
+
+                //Get value from dictionary and store in X64Apps32List
+                foreach (Dictionary<string, string> EachDict in GetRegistryKeyValues(Regx64Apps32, RegistryValuesToRead))
+                {
+                    x64Apps32List.AddRange(from entry in EachDict where entry.Key == RegistryValuesToRead[0] select entry.Value);
+                }
+
+                IEnumerable<string> x86Apps = x64Apps32List.Except(x64Apps64List);
+                IEnumerable<string> x64Apps = x64Apps64List.Except(x64Apps32List);
+
+                AllApps.AddRange(x86Apps);
+                AllApps.AddRange(x64Apps);
+            }
+
+            AllApps.Sort();
+            return AllApps;
+        }
+
+        /// <summary>
+        /// Obtain a complete detailed list of Installed Applications by consulting with the
+        /// system registry.
+        /// </summary>
+        /// <returns>List of RegistryApps Structs</returns>
+        public List<RegistryApp> GetAllInstalledApplicationDetails()
+        {
+            RegistryApp RegApp;
+            var listOfAllAppsInstalled = new List<RegistryApp>();
+            string[] RegistryValuesToRead = { "Publisher", "DisplayName", "DisplayVersion", "InstallDate" };
+
+            if (Environment.GetEnvironmentVariable("PROCESSOR_ARCHITECTURE") == "x86"
+                && Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432") == null)
+            {
+                ///////////////////////////////////////////////////////////
+                // 32BIT SYSTEM                                          //
+                ///////////////////////////////////////////////////////////
+                foreach (Dictionary<string, string> eachDict in GetRegistryKeyValues(RegX86Apps32, RegistryValuesToRead, true))
+                {
+                    RegApp = new RegistryApp();
+                    foreach (KeyValuePair<string, string> entry in eachDict)
+                    {
+
+                        switch (entry.Key)
+                        {
+                            case "Publisher":
+                                RegApp.VendorName = entry.Value;
+                                break;
+                            case "DisplayName":
+                                RegApp.Name = entry.Value;
+                                break;
+                            case "DisplayVersion":
+                                RegApp.Version = entry.Value;
+                                break;
+                            case "InstallDate":
+                                RegApp.Date = entry.Value;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    listOfAllAppsInstalled.Add(RegApp);
+                }
+                Console.WriteLine();
+
+            }
+            else
+            {
+                //////////////////////////////////////////////////////////
+                // 64BIT SYSTEM (Made up of 32bit Apps, and 64bit Apps) //
+                //////////////////////////////////////////////////////////
+                List<RegistryApp> x64Apps64List = new List<RegistryApp>();
+                List<RegistryApp> x64Apps32List = new List<RegistryApp>();
+
+                //Get value from dictionary and store in X64Apps64List
+                //////////////////////////////////////////////////////
+                foreach (Dictionary<string, string> EachDict in GetRegistryKeyValues(Regx64Apps64, RegistryValuesToRead, true))
+                {
+                    RegApp = new RegistryApp();
+                    foreach (KeyValuePair<string, string> entry in EachDict)
+                    {
+                        switch (entry.Key)
+                        {
+                            case "Publisher":
+                                RegApp.VendorName = entry.Value;
+                                break;
+                            case "DisplayName":
+                                RegApp.Name = entry.Value;
+                                break;
+                            case "DisplayVersion":
+                                RegApp.Version = entry.Value;
+                                break;
+                            case "InstallDate":
+                                RegApp.Date = entry.Value;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    listOfAllAppsInstalled.Add(RegApp);
+                }
+
+                //Get value from dictionary and store in X64Apps32List
+                //////////////////////////////////////////////////////
+                foreach (Dictionary<string, string> EachDict in GetRegistryKeyValues(Regx64Apps32, RegistryValuesToRead, true))
+                {
+                    RegApp = new RegistryApp();
+                    foreach (KeyValuePair<string, string> entry in EachDict)
+                    {
+                        switch (entry.Key)
+                        {
+                            case "Publisher":
+                                RegApp.VendorName = entry.Value;
+                                break;
+                            case "DisplayName":
+                                RegApp.Name = entry.Value;
+                                break;
+                            case "DisplayVersion":
+                                RegApp.Version = entry.Value;
+                                break;
+                            case "InstallDate":
+                                RegApp.Date = entry.Value;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    listOfAllAppsInstalled.Add(RegApp);
+                }
+            }
+
+            //Get all unique entries, no duplicates! Pleasee no duplicates...
+            var parsedList = new List<RegistryApp>();
+            parsedList.AddRange(listOfAllAppsInstalled.Where(regitem => (regitem.Name != null) && (regitem.Name.Length > 1) && (regitem.Name != "")));
+            listOfAllAppsInstalled.Clear();
+            listOfAllAppsInstalled = parsedList.OrderBy(x => x.Date).ToList();
+
+
+            return listOfAllAppsInstalled;
+        }
+
+        /// <summary>
+        /// Returns a list of key values as requested in the values parameter. 
+        /// This is fetched from the installed software found in the system registry.
+        /// </summary>
+        /// <param name="KeyPath"></param>
+        /// <param name="values"></param>
+        /// <returns>List of Dictionaries</returns>
+        private IEnumerable<Dictionary<string, string>> GetRegistryKeyValues(string KeyPath, string[] values, bool detailed = false)
+        {
+            var AppList = new List<Dictionary<string, string>>();
+            var ListOfInstalledApps = new List<string>();
+            Dictionary<string, string> DictValues;
+
+            try
+            {
+                RegistryKey regKey = Registry.LocalMachine.OpenSubKey(KeyPath);
+                if (regKey != null)
+                {
+                    foreach (var v in regKey.GetSubKeyNames())
+                    {
+                        using (RegistryKey subKey = regKey.OpenSubKey(v))
+                        {
+                            if (subKey != null && subKey.ValueCount < 3) continue;
+                            DictValues = new Dictionary<string, string>();
+
+                            //Check if theres a InstallDate key, if not then check for InstallLocation
+                            //and retrieve installed date from the directory.
+                            var result = Convert.ToString(subKey.GetValue("InstallDate"));
+                            if (result.Length < 3 && result == "")
+                            {
+                                result = Convert.ToString(subKey.GetValue("InstallLocation"));
+                                if (result.Length > 3 && result != null)
+                                    result = GetCreationDateOfFolder(result);
+                                else
+                                {
+                                    result = Convert.ToString(subKey.GetValue("DisplayIcon"));
+                                    result = TryToGetPath(result);
+                                    if (result != string.Empty)
+                                        result = GetCreationDateOfFolder(result);
+                                }
+                            }
+
+                            //This is only false if we are simply retriving list of installed app names.
+                            if (detailed != true)
+                            {
+                                DictValues = new Dictionary<string, string>();
+                                foreach (string value in values)
+                                {
+                                    var temp = Convert.ToString(subKey.GetValue(value));
+                                    DictValues.Add(value, temp);
+                                }
+
+                                if (result != string.Empty)
+                                    AppList.Add(DictValues);
+                                continue;
+                            }
+
+                            //Iterate each RegistryApp field and add proper value to it
+                            foreach (var value in values)
+                            {
+                                var temp = Convert.ToString(subKey.GetValue(value));
+
+                                if (result != string.Empty && value == "InstallDate")
+                                {
+                                    DictValues.Add(value, result);
+                                    continue;
+                                }
+                                DictValues.Add(value, temp);
+                            }
+
+                            //Check that installdate is available, if not then this is not a add/remove program.
+                            if (DictValues["InstallDate"] != string.Empty)
+                                AppList.Add(DictValues);
+                        }
+                    }
+                    regKey.Close();
+                }
+            }
+            catch (Exception)
+            {
+                return AppList;
+            }
+
+
+            return AppList;
+        }
+
+        private string GetCreationDateOfFolder(string Path)
+        {
+            try
+            {
+                DateTime dateTime = Directory.GetCreationTime(Path);
+                string date = dateTime.ToString("yyyyMMdd");
+                return date;
+            }
+            catch (Exception)
+            {
+                return string.Empty;
+            }
+
+        }
+
+        private string TryToGetPath(string DisplayIconPath)
+        {
+            string PathToUse = string.Empty;
+
+            try
+            {
+                if (DisplayIconPath[DisplayIconPath.Length - 1] != '\\')
+                {
+                    string[] split = DisplayIconPath.Split(new[] { '\\' });
+                    if (split.Length >= 3)
+                    {
+                        for (int x = 0; x <= 3; x++)
+                        {
+                            if (x == 0)
+                                PathToUse = split[x];
+                            else
+                                PathToUse += "\\" + split[x];
+                        }
+                    }
+                    return PathToUse;
+                }
+                return PathToUse;
+            }
+            catch (Exception)
+            {
+                return string.Empty;
+            }
+        }
+        /// <summary>
+        /// Structure to hold the data to be retrieve from the Registry Installed Applications
+        /// </summary>
+        public struct RegistryApp
+        {
+            public string VendorName;
+            public string Name;
+            public string Version;
+            public string Date;
+        }
+
+
+    }
+
+}

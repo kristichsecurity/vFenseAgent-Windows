@@ -1,0 +1,99 @@
+ ___    ___  _______
+|   |  |        |       /\
+|__/   |___     |      /__\
+|  \   |        |     /    \
+|___|  |___     |    /      \
+
+=========================================================
+0.107.86
+=========================================================
+	Enchancements
+		-Enable Optimize Code
+	Misc
+		-Removed unwanted code
+
+=========================================================
+=========================================================
+Alpha        ___
+  /\   |    |   |  |   |    /\
+ /__\  |    |___|  |___|   /__\
+/    \ |__  |      |   |  /    \
+=========================================================
+=========================================================
+	Bug Fixes
+		-Updater Fail 
+	Enchancements
+		-New updater updates RA
+		-New updater updates all files
+
+
+
+=========================================================
+=========================================================
+	Bug Fixes
+		- fixed minor bug, not supporting file format .EXE
+
+
+
+=========================================================
+=========================================================
+	Enhancements
+		-enable WSUS to work with local/non-local server
+
+
+
+=========================================================
+=========================================================
+	New features
+		- Implemented support for Relay Server. Agent can now make use of multiple download locations to ensure files are successfully downloaded.
+		- Implemented Agent Updater CLI with Help flag.
+		- Agent updater now detects current agent version and applies proper encryption/decryption to operation files when upgrading.
+		- Agent supports use of WSUS and will automatically choose proper server.
+		- Remote Assistance has been implemented
+		
+	Bug fixes
+		- Fixed reboot results not being sent back properly to server after successful system reboot.
+    
+	Enhancements
+		- Refactored OsUpdate, CustomApp, SupportedApp downloader into its own class file.
+
+
+
+=========================================================
+=========================================================
+	New features
+	    - Full support for Windows 8.1 and Server 2012 R2
+		- OS Service pack will be displayed along side OS Name.
+		- Display Windows firewall status in log.
+		- Display Malware protection status (Vista, 7, 8) in log
+		- Display WSUS Status and AU Status in log.
+		- Setup file handles Service Controls
+		- Setup UI will now only allow the "Next" button to be pressed if all fields are populated.
+		- Setup provides a "Verify Credentials" button to allow user to verify credentials before proceeding.
+		- Setup shows progress bar for .NET 3.5.1 pre-requisite install.
+		- Setup automatically enables .NET 3.5.1 feature on 2008, 2008R2, Windows 8, 2012 and 8.1
+		- Setup automatically upgrades the Windows Update Agent (WUA) if its not at least 7.4.7600.226
+		- Setup will check and advise if WSUS settings are enabled on the current machine.
+		- Setup will check and advise if a reboot is currently pending on the system.
+		- TpaMaintenance now re-installs the TpaService if it crashes.
+		- Completely new implementation of the NetworkManager using RestSharp library.
+		- Implemented new operations folder check to ensure any left behind operations get resubmitted after 1 hour of no activity.
+		- Major enhancements to Installing windows updates, supported apps, custom apps as well as Downloading.
+	    
+	Bug fixes
+		- While processing operations agent will no longer send list of available updates and installed apps to server.
+		- Adobe reader update disabler now properly identifies 32bit/64bit OS and disables the auto updates.
+		- Multiple operations can be submitted at once and agent will keep track, even after a system reboot and/or service crash.
+		- Fixed Monitor Plugin; It was gathering data even if no Agent ID was found in the config file. 
+		- Retrieve new updates and installed updates will no longer run twice at startup.
+		- Supported app was not deleting operation if one of the Applications to install ended in error.
+		- Corrected Agent Checkin, it will now only checkin with server if a agent id is found in the config file.
+		- Fixed ResultsQueue typo, this was causing confusion and possibly introducing other issues because of it.
+		- Fixed CustomApp bug, if application existed it was crashing the operation, making it stay in pending.
+		- Fixed supported/custom update folder deletion upon results being received by server, folder was not being deleted.
+		- Fixed Custom app installing successfully but results not being received properly by server due to agent not providing details on the application installed.
+		- Fixed Supported app Acrobat reader staying in idle after operation came in and sent to operations folder.
+		- Fixed App uninstall, it now properly sends back app details in order to successfully populate Dashboard with app that was removed.
+
+		
+     

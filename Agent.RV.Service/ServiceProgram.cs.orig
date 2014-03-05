@@ -1,0 +1,163 @@
+﻿using System;
+using System.ComponentModel;
+using System.Configuration.Install;
+using System.Diagnostics;
+using System.IO;
+using System.Reflection;
+using System.ServiceProcess;
+using System.Threading;
+using System.Security.Cryptography.X509Certificates;
+
+using Agent.Core;
+using Agent.Core.Net;
+using Agent.Core.ServerOpertation;
+using Agent.Core.Utils;
+
+namespace Agent.RV.Service
+{
+    public class ServiceProgram : ServiceBase
+    {
+        public const string TheServiceName = "TpaService";
+        public const string TheDisplayName = "TopPatch Agent";
+        public const string TheDescription = "Provides communication between this agent and the TopPatch Server.";
+
+        static AgentMain core;
+
+        static Thread agentThread;
+
+        static void Main(string[] args)
+        {
+            if (System.Environment.UserInteractive)
+            {
+                string parameter = string.Concat(args);
+                switch (parameter)
+                {
+                    case "-i":
+                    case "--install":
+                        ManagedInstallerClass.InstallHelper(new string[] { Assembly.GetExecutingAssembly().Location });
+                        break;
+                    case "-u":
+                    case "--uninstall":
+                        // Check if service is installed before trying to uninstall it.
+                        ServiceController sc = new ServiceController(TheServiceName);
+                        foreach( ServiceController s in ServiceController.GetServices())
+                        {
+                            if(s.ServiceName.Equals(TheServiceName))
+                                ManagedInstallerClass.InstallHelper(new string[] { "/u", Assembly.GetExecutingAssembly().Location });
+                        }
+                        break;
+                    case "-s":
+                    case "--start":
+                        RunNetCommand("start");
+                        break;
+                    case "-t":
+                    case "--stop":
+                        RunNetCommand("stop");
+                        break;
+                    case "-is":
+                    case "--installstart":
+                        try
+                        {                        
+                            ManagedInstallerClass.InstallHelper(new string[] { Assembly.GetExecutingAssembly().Location });
+                            Console.WriteLine("Starting agent. Please wait...");
+                            RunNetCommand("start");
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine("Error when attempting to install and start service: {0}", e.Message);
+                        }
+                         break;
+                    default:
+                        Console.WriteLine("Invalid option.");
+                        Console.WriteLine("Valid options: -i(--install), -u(--uninstall), -s(--start), -t(--stop), -is(--installstart)");
+                        break;
+                }
+            }
+            else
+            {
+                ServiceBase.Run(new ServiceProgram());
+            }
+        }
+
+        public void Execute(string[] param)
+        {
+            Main(param);
+        }
+
+        static void RunNetCommand(string option)
+        {
+            ProcessStartInfo processInfo = new ProcessStartInfo();
+            processInfo.FileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "sc.exe");
+            processInfo.Arguments = String.Format(@"{0} {1}", option, TheServiceName);
+            processInfo.UseShellExecute = false;
+            processInfo.CreateNoWindow = true;
+            processInfo.RedirectStandardOutput = true;
+
+            using (Process process = Process.Start(processInfo))
+            {
+                process.WaitForExit();
+                Console.WriteLine("Exit Code: " + new Win32Exception(process.ExitCode).Message);
+                StreamReader output = process.StandardOutput;
+                Console.WriteLine("Output: " + output.ReadToEnd());
+            }
+        }
+
+        public ServiceProgram()
+        {
+            ServiceName = TheServiceName;
+            CanShutdown = true; // Want to be notified when a shutdown occurs. 
+        }
+
+        protected override void OnStart(string[] args)
+        {
+            base.OnStart(args);
+
+            agentThread = new Thread(new ThreadStart(RunThisThing));
+            try
+            {
+                agentThread.Start();
+            }
+            catch (Exception e)
+<<<<<<< HEAD
+            {                
+=======
+            {
+>>>>>>> b0e0c58a16a090f0411f7a4cf71894cfe16a40ee
+                Logger.Log("Caught Exception in at start up.", LogLevel.Error);
+                Logger.LogException(e);
+                Stop();
+            }
+        }
+
+        private static void RunThisThing()
+        {
+            core = new AgentMain("agent");
+<<<<<<< HEAD
+            try
+            {
+                core = new AgentMain("agent");
+                core.Run();
+            }
+            catch (Exception e)
+            {
+                Logger.Log("Error when attempting to run RV Core: {0}", LogLevel.Error, e.ToString());
+            }
+          
+=======
+            core.Run();
+>>>>>>> b0e0c58a16a090f0411f7a4cf71894cfe16a40ee
+        }
+
+        protected override void OnShutdown()
+        {
+            base.OnShutdown();
+        }
+
+        protected override void OnStop()
+        {
+            Logger.Log("Stopping agent.");
+            Logger.Log("===========================");
+            base.OnStop();
+        }
+    }
+}

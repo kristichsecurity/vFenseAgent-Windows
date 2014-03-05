@@ -1,0 +1,683 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<DOCUMENT Type="Advanced Installer" CreateVersion="9.5" version="10.7.1" Modules="enterprise" RootPath="." Language="en" Id="{9A80FEA5-B82F-4CBB-9318-51137FE7D03D}">
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiValidationComponent">
+    <ROW Table="File" Column="Sequence" MinValue="1" MaxValue="2147483647" Description="Sequence with respect to the media images; order must track cabinet order." Options="0" ColumnType="3" ColumnIndex="7" ColumnSize="4" MsiKey="File#Sequence"/>
+    <ROW Table="Media" Column="LastSequence" MinValue="0" MaxValue="2147483647" Description="File sequence number for the last file for this media." Options="0" ColumnType="3" ColumnIndex="1" ColumnSize="4" MsiKey="Media#LastSequence"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
+    <ROW Property="AI_BITMAP_DISPLAY_MODE" Value="0"/>
+    <ROW Property="AI_CF_FrameBottomLeft" Value="frame_bottom_left.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameBottomLeftInactive" Value="frame_bottom_left_inactive.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameBottomMid" Value="frame_bottom_mid.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameBottomMidInactive" Value="frame_bottom_mid_inactive.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameBottomRight" Value="frame_bottom_right.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameBottomRightInactive" Value="frame_bottom_right_inactive.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameCaption" Value="frame_caption.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameCaptionInactive" Value="frame_caption_inactive.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameLeft" Value="frame_left.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameLeftInactive" Value="frame_left_inactive.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameRight" Value="frame_right.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameRightInactive" Value="frame_right_inactive.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameTopLeft" Value="frame_top_left.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameTopLeftInactive" Value="frame_top_left_inactive.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameTopMid" Value="frame_top_mid.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameTopMidInactive" Value="frame_top_mid_inactive.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameTopRight" Value="frame_top_right.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameTopRightInactive" Value="frame_top_right_inactive.bmp" Type="1"/>
+    <ROW Property="AI_CF_SysCloseDown" Value="sys_close_down.bmp" Type="1"/>
+    <ROW Property="AI_CF_SysCloseHot" Value="sys_close_hot.bmp" Type="1"/>
+    <ROW Property="AI_CF_SysCloseInactive" Value="sys_close_inactive.bmp" Type="1"/>
+    <ROW Property="AI_CF_SysCloseNormal" Value="sys_close_normal.bmp" Type="1"/>
+    <ROW Property="AI_CF_SysMinDown" Value="sys_min_down.bmp" Type="1"/>
+    <ROW Property="AI_CF_SysMinHot" Value="sys_min_hot.bmp" Type="1"/>
+    <ROW Property="AI_CF_SysMinInactive" Value="sys_min_inactive.bmp" Type="1"/>
+    <ROW Property="AI_CF_SysMinNormal" Value="sys_min_normal.bmp" Type="1"/>
+    <ROW Property="AI_CF_TYPE" Value="0" MultiBuildValue="DefaultBuild:1" Type="4"/>
+    <ROW Property="AI_CLEAN_RESOURCES_DISABLE_UPGRADE" Value="1"/>
+    <ROW Property="AI_CLEAN_RESOURCES_UNINSTALL" Value="1"/>
+    <ROW Property="AI_CLEAN_RESOURCES_USER_PROMPT_BASIC_UI" Value="0"/>
+    <ROW Property="AI_CLEAN_RESOURCES_USER_PROMPT_FULL_UI" Value="0"/>
+    <ROW Property="AI_FINDEXE_TITLE" Value="Select the installation package for [|ProductName]" ValueLocId="AI.Property.FindExeTitle"/>
+    <ROW Property="AI_ThemeStyle" Value="default" MultiBuildValue="DefaultBuild:style31" MsiKey="AI_ThemeStyle"/>
+    <ROW Property="ALLUSERS" Value="1"/>
+    <ROW Property="ARPCOMMENTS" Value="This installer database contains the logic and data required to install [|ProductName]." ValueLocId="*"/>
+    <ROW Property="ARPCONTACT" Value="support@toppatch.com"/>
+    <ROW Property="ARPHELPLINK" Value="http://support.toppatch.com"/>
+    <ROW Property="ARPNOMODIFY" MultiBuildValue="DefaultBuild:1"/>
+    <ROW Property="ARPNOREPAIR" Value="1"/>
+    <ROW Property="ARPPRODUCTICON" Value="TopPatchIcon.exe" Type="8"/>
+    <ROW Property="ARPURLINFOABOUT" Value="http://www.toppatch.com"/>
+    <ROW Property="ARPURLUPDATEINFO" Value="http://www.toppatch.com/"/>
+    <ROW Property="BannerBitmap" Value="banner" MultiBuildValue="DefaultBuild:TopRightIcon.jpg" Type="1" MsiKey="BannerBitmap"/>
+    <ROW Property="CUSTOMER" Value="default" Type="4"/>
+    <ROW Property="DialogBitmap" Value="dialog" MultiBuildValue="DefaultBuild:TopPatchSetupImage.jpg" Type="1" MsiKey="DialogBitmap"/>
+    <ROW Property="Manufacturer" Value="TopPatch Inc."/>
+    <ROW Property="MsiLogging" MultiBuildValue="DefaultBuild:v"/>
+    <ROW Property="ProductCode" Value="1033:{6FCEC443-1551-482C-9FF7-D412F33A3BA9} " Type="16"/>
+    <ROW Property="ProductLanguage" Value="1033"/>
+    <ROW Property="ProductName" Value="TopPatch Agent"/>
+    <ROW Property="ProductVersion" Value="2.2.13" Type="32"/>
+    <ROW Property="REBOOT" MultiBuildValue="DefaultBuild:Suppress"/>
+    <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND;AI_SETUPEXEPATH;SETUPEXEDIR"/>
+    <ROW Property="UpgradeCode" Value="{EEF08928-1597-4376-8CFE-C404B14EDB4C}"/>
+    <ROW Property="WindowsType9X" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>
+    <ROW Property="WindowsType9XDisplay" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT" MultiBuildValue="DefaultBuild:Windows 2000, Windows 2000 Service Pack 1, Windows 2000 Service Pack 2, Windows 2000 Service Pack 3, Windows 2000 Service Pack 4" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT40" MultiBuildValue="DefaultBuild:Windows NT 4.0" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT40Display" MultiBuildValue="DefaultBuild:Windows NT 4.0" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNTDisplay" MultiBuildValue="DefaultBuild:Windows 2000" ValueLocId="-"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiDirsComponent">
+    <ROW Directory="APPDIR" Directory_Parent="TARGETDIR" DefaultDir="APPDIR:." IsPseudoRoot="1" DirectoryOptions="3"/>
+    <ROW Directory="AdvancedInstaller_Dir" Directory_Parent="Caphyon_Dir" DefaultDir="Advanc~1|Advanced Installer"/>
+    <ROW Directory="Caphyon_Dir" Directory_Parent="CommonAppDataFolder" DefaultDir="Caphyon"/>
+    <ROW Directory="CommonAppDataFolder" Directory_Parent="TARGETDIR" DefaultDir="Common~1|CommonAppDataFolder" IsPseudoRoot="1"/>
+    <ROW Directory="NETFramework3.5SP1_Dir" Directory_Parent="Prerequisites_Dir" DefaultDir="NETFra~1.5SP|.NET Framework 3.5 SP1"/>
+    <ROW Directory="NewFolder_Dir" Directory_Parent="APPDIR" DefaultDir="content" DirectoryOptions="3"/>
+    <ROW Directory="Prerequisites_Dir" Directory_Parent="AdvancedInstaller_Dir" DefaultDir="Prereq~1|Prerequisites"/>
+    <ROW Directory="TARGETDIR" DefaultDir="SourceDir"/>
+    <ROW Directory="bin_Dir" Directory_Parent="APPDIR" DefaultDir="bin" DirectoryOptions="3"/>
+    <ROW Directory="logs_Dir" Directory_Parent="APPDIR" DefaultDir="logs" DirectoryOptions="3"/>
+    <ROW Directory="operations_Dir" Directory_Parent="APPDIR" DefaultDir="OPERAT~1|operations" DirectoryOptions="3"/>
+    <ROW Directory="plugins_Dir" Directory_Parent="APPDIR" DefaultDir="plugins" DirectoryOptions="3"/>
+    <ROW Directory="ssh_Dir" Directory_Parent="bin_Dir" DefaultDir="ssh" DirectoryOptions="3"/>
+    <ROW Directory="vnc_Dir" Directory_Parent="bin_Dir" DefaultDir="vnc" DirectoryOptions="3"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
+    <ROW Component="AI_ExePath" ComponentId="{7C14979F-28DB-458B-823B-CCF505825B20}" Directory_="APPDIR" Attributes="4" KeyPath="AI_ExePath"/>
+    <ROW Component="Agent.Core.dll" ComponentId="{06955A8F-46E2-4A64-BF6A-A08B2A4D79E9}" Directory_="APPDIR" Attributes="0" Condition="VersionNT64" KeyPath="Agent.Core.dll"/>
+    <ROW Component="Agent.Monitoring.dll" ComponentId="{81AE61EA-705C-4379-A107-C218F72B0A2C}" Directory_="plugins_Dir" Attributes="0" Condition="VersionNT64" KeyPath="Agent.Monitoring.dll"/>
+    <ROW Component="Agent.RA.dll" ComponentId="{AA2AF8D4-575D-436A-A1BC-E72CB54634AE}" Directory_="plugins_Dir" Attributes="0" Condition="VersionNT64" KeyPath="Agent.RA.dll"/>
+    <ROW Component="Agent.RV.Service.exe" ComponentId="{AD1E70E9-0FC9-4907-A39C-F5D5795A6076}" Directory_="APPDIR" Attributes="0" Condition="VersionNT64" KeyPath="Agent.RV.Service.exe"/>
+    <ROW Component="Agent.RV.WatcherService.exe" ComponentId="{658EBFCE-F0AF-43AA-A149-F2128CFDB002}" Directory_="APPDIR" Attributes="0" Condition="VersionNT64" KeyPath="Agent.RV.WatcherService.exe"/>
+    <ROW Component="Agent.RV.dll" ComponentId="{541A6765-66A8-4C64-A920-515F84030D4B}" Directory_="plugins_Dir" Attributes="0" Condition="VersionNT64" KeyPath="Agent.RV.dll"/>
+    <ROW Component="CC0311D065A748FABE35E813F6344757" ComponentId="{665EB0B7-3BC1-4CDE-B00B-F8614C8DA655}" Directory_="APPDIR" Attributes="4" KeyPath="CC0311D065A748FABE35E813F6344757" Options="2"/>
+    <ROW Component="Interop.WUApiLib.dll_1" ComponentId="{1283B706-EF7A-4113-9FEC-1B21440E794F}" Directory_="APPDIR" Attributes="0" Condition="VersionNT64" KeyPath="Interop.WUApiLib.dll_1"/>
+    <ROW Component="Microsoft.Deployment.Compression.Cab.dll" ComponentId="{9AB00389-429F-4AA7-B06D-1D6F78E1A6FD}" Directory_="APPDIR" Attributes="0" Condition="VersionNT64" KeyPath="Microsoft.Deployment.Compression.Cab.dll"/>
+    <ROW Component="Microsoft.Deployment.Compression.dll" ComponentId="{8B5CBB4F-6911-46FD-93BF-B261A3533632}" Directory_="APPDIR" Attributes="0" Condition="VersionNT64" KeyPath="Microsoft.Deployment.Compression.dll"/>
+    <ROW Component="NETFramework3.5SP1.aip" ComponentId="{ABACE31A-0B40-4A92-9F06-7A82F6A7207D}" Directory_="NETFramework3.5SP1_Dir" Attributes="0" KeyPath="NETFramework3.5SP1.aip" Type="0"/>
+    <ROW Component="NLog.dll" ComponentId="{E8D593C3-C090-4761-A98B-93B508144051}" Directory_="APPDIR" Attributes="0" Condition="VersionNT64" KeyPath="NLog.dll"/>
+    <ROW Component="NewFolder" ComponentId="{FC6279A4-7C5E-4C1B-BA65-E2A1091CE68D}" Directory_="NewFolder_Dir" Attributes="0"/>
+    <ROW Component="Newtonsoft.Json.dll" ComponentId="{9996060E-0AE5-4065-8641-17F2A2651816}" Directory_="APPDIR" Attributes="0" Condition="VersionNT64" KeyPath="Newtonsoft.Json.dll"/>
+    <ROW Component="PatchPayload.exe" ComponentId="{7E0E410A-273F-4966-85C2-6C485E4E58E6}" Directory_="bin_Dir" Attributes="0" KeyPath="PatchPayload.exe"/>
+    <ROW Component="ProductInformation" ComponentId="{C135176C-7E89-420B-AC6C-40C17EC80754}" Directory_="APPDIR" Attributes="4" KeyPath="Version"/>
+    <ROW Component="RestSharp.dll" ComponentId="{86D03D7A-F861-4F1D-AF9C-812CFE58B161}" Directory_="APPDIR" Attributes="0" KeyPath="RestSharp.dll"/>
+    <ROW Component="UpdateInstaller.exe" ComponentId="{DAF0EEE2-1E76-47D6-9F6E-F802DF14E69D}" Directory_="bin_Dir" Attributes="0" KeyPath="UpdateInstaller.exe"/>
+    <ROW Component="agent.config" ComponentId="{FAB13E54-35D6-46C2-87FD-CF1EBAAADD9B}" Directory_="APPDIR" Attributes="0" KeyPath="TpaService.exe.config"/>
+    <ROW Component="cygcrypto0.9.7.dll" ComponentId="{CF1AD7A9-D091-4552-ADDE-BE9C6024CE4C}" Directory_="ssh_Dir" Attributes="0" Condition="VersionNT64" KeyPath="cygcrypto0.9.7.dll"/>
+    <ROW Component="cygminires.dll" ComponentId="{CB997332-FE31-4C87-8867-8E6BE39A8132}" Directory_="ssh_Dir" Attributes="0" Condition="VersionNT64" KeyPath="cygminires.dll"/>
+    <ROW Component="cygwin1.dll" ComponentId="{A319E78A-A47D-4C3D-8FDC-3B2B5C2597FE}" Directory_="ssh_Dir" Attributes="0" Condition="VersionNT64" KeyPath="cygwin1.dll"/>
+    <ROW Component="cygz.dll" ComponentId="{46FB600E-1E0E-40D6-9155-85E445BA95A3}" Directory_="ssh_Dir" Attributes="0" Condition="VersionNT64" KeyPath="cygz.dll"/>
+    <ROW Component="dotnetfx35setup.exe" ComponentId="{BA91B877-7BFD-4283-87CB-C15D1D4BBCA3}" Directory_="NETFramework3.5SP1_Dir" Attributes="0" Condition="VersionNT64" KeyPath="dotnetfx35setup.exe"/>
+    <ROW Component="logs" ComponentId="{74AB6854-B9AF-49E5-ACAC-0720FC3C873A}" Directory_="logs_Dir" Attributes="0"/>
+    <ROW Component="operations" ComponentId="{BFE137D9-0A3A-4998-8687-5A1F0D3D0E32}" Directory_="operations_Dir" Attributes="0"/>
+    <ROW Component="sas.dll" ComponentId="{44B325F1-4ECB-44E5-AA07-0A08BE095145}" Directory_="vnc_Dir" Attributes="0" Condition="VersionNT64" KeyPath="sas.dll"/>
+    <ROW Component="scp.exe" ComponentId="{94506D28-C307-4B9D-9E51-DE43C4A7EEDF}" Directory_="ssh_Dir" Attributes="0" Condition="VersionNT64" KeyPath="scp.exe"/>
+    <ROW Component="screenhooks32.dll" ComponentId="{483F2CAB-8445-4913-8B59-4521BE9FACFB}" Directory_="vnc_Dir" Attributes="0" Condition="VersionNT64" KeyPath="screenhooks32.dll"/>
+    <ROW Component="sftp.exe" ComponentId="{19216EA2-4319-426F-BF67-1EBA4793CF0B}" Directory_="ssh_Dir" Attributes="0" Condition="VersionNT64" KeyPath="sftp.exe"/>
+    <ROW Component="ssh.exe" ComponentId="{C79AAED2-A087-4A4F-A4C0-B8139700D4E5}" Directory_="ssh_Dir" Attributes="0" Condition="VersionNT64" KeyPath="ssh.exe"/>
+    <ROW Component="sshagent.exe" ComponentId="{B3A5C53C-6120-42A4-9754-668AE0F2D593}" Directory_="ssh_Dir" Attributes="0" Condition="VersionNT64" KeyPath="sshagent.exe"/>
+    <ROW Component="sshkeygen.exe" ComponentId="{BC633A74-8322-4861-9A06-87C5D2313C6A}" Directory_="ssh_Dir" Attributes="0" Condition="VersionNT64" KeyPath="sshkeygen.exe"/>
+    <ROW Component="sshkeyscan.exe" ComponentId="{654A1087-8147-44E5-BAEE-BCA707786996}" Directory_="ssh_Dir" Attributes="0" Condition="VersionNT64" KeyPath="sshkeyscan.exe"/>
+    <ROW Component="tvnserver.exe" ComponentId="{0BFD59D5-9594-48A7-94B4-85645A54CA59}" Directory_="vnc_Dir" Attributes="0" Condition="VersionNT64" KeyPath="tvnserver.exe"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
+    <ROW Feature="AI32BitFiles" Title="32-bit" Description="32-bit Executables and Libraries" Display="11" Level="1" Directory_="APPDIR" Attributes="0" Components="AI_ExePath Agent.Core.dll Agent.Monitoring.dll Agent.RA.dll Agent.RV.Service.exe Agent.RV.WatcherService.exe Agent.RV.dll Interop.WUApiLib.dll_1 Microsoft.Deployment.Compression.Cab.dll Microsoft.Deployment.Compression.dll NLog.dll Newtonsoft.Json.dll RestSharp.dll cygcrypto0.9.7.dll cygminires.dll cygwin1.dll cygz.dll dotnetfx35setup.exe sas.dll scp.exe screenhooks32.dll sftp.exe ssh.exe sshagent.exe sshkeygen.exe sshkeyscan.exe tvnserver.exe"/>
+    <ROW Feature="AIOtherFiles" Title="Common" Description="Shared Resource and Regular Files" Display="13" Level="1" Directory_="APPDIR" Attributes="0" Components="AI_ExePath NETFramework3.5SP1.aip agent.config"/>
+    <ROW Feature="CC0311D065A748FABE35E813F6344757" Title=".NET Framework 3.5 SP1" Description=".NET Framework 3.5 SP1" Display="3" Level="1" Attributes="16" Components="AI_ExePath CC0311D065A748FABE35E813F6344757 NewFolder PatchPayload.exe UpdateInstaller.exe operations"/>
+    <ROW Feature="F07523DA3846FF9467B08163CD2CFA" Title="WUA 64bit" Description="WUA 64bit" Display="7" Level="1" Attributes="0" Components="AI_ExePath"/>
+    <ROW Feature="F46432430634C75A5FF967A6F846A90" Title="WUA 32bit" Description="WUA 32bit" Display="5" Level="1" Attributes="0" Components="AI_ExePath"/>
+    <ROW Feature="Feature" Feature_Parent="TPFiles" Title="plugins" Description="Description" Display="3" Level="1" Directory_="APPDIR" Attributes="0" Components="AI_ExePath"/>
+    <ROW Feature="Feature_3" Feature_Parent="TPFiles" Title="bin" Description="Description" Display="7" Level="1" Directory_="APPDIR" Attributes="0" Components="AI_ExePath"/>
+    <ROW Feature="Feature_4" Feature_Parent="TPFiles" Title="logs" Description="Description" Display="9" Level="1" Directory_="APPDIR" Attributes="0" Components="AI_ExePath logs"/>
+    <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0" Components="AI_ExePath ProductInformation"/>
+    <ROW Feature="TPFiles" Title="TPFiles" Description="Description" Display="9" Level="1" Directory_="APPDIR" Attributes="0" Components="AI_ExePath"/>
+    <ATTRIBUTE name="CurrentFeature" value="CC0311D065A748FABE35E813F6344757"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
+    <ROW File="Agent.Core.dll" Component_="Agent.Core.dll" FileName="AgentC~1.dll|Agent.Core.dll" Version="65535.65535.65535.65535" Attributes="512" SourcePath="..\..\Agent.Core\bin\Debug\Agent.Core.dll" SelfReg="false" NextFile="Interop.WUApiLib.dll_1"/>
+    <ROW File="Agent.Monitoring.dll" Component_="Agent.Monitoring.dll" FileName="AgentM~1.dll|Agent.Monitoring.dll" Version="65535.65535.65535.65535" Attributes="512" SourcePath="..\..\Agent.Monitoring\bin\Debug\Agent.Monitoring.dll" SelfReg="false" NextFile="Agent.RA.dll" DigSign="true"/>
+    <ROW File="Agent.RA.dll" Component_="Agent.RA.dll" FileName="AgentR~2.dll|Agent.RA.dll" Version="65535.65535.65535.65535" Attributes="512" SourcePath="..\..\Agent.RA\bin\Debug\Agent.RA.dll" SelfReg="false" NextFile="cygcrypto0.9.7.dll" DigSign="true"/>
+    <ROW File="Agent.RV.Service.exe" Component_="Agent.RV.Service.exe" FileName="AgentR~1.exe|Agent.RV.Service.exe" Version="65535.65535.65535.65535" Attributes="512" SourcePath="..\..\Agent.RV.Service\bin\Debug\Agent.RV.Service.exe" SelfReg="false" NextFile="Agent.RV.WatcherService.exe" DigSign="true"/>
+    <ROW File="Agent.RV.WatcherService.exe" Component_="Agent.RV.WatcherService.exe" FileName="AgentR~2.exe|Agent.RV.WatcherService.exe" Version="65535.65535.65535.65535" Attributes="512" SourcePath="..\..\Agent.RV.WatcherService\bin\Debug\Agent.RV.WatcherService.exe" SelfReg="false" NextFile="Agent.Core.dll" DigSign="true"/>
+    <ROW File="Agent.RV.dll" Component_="Agent.RV.dll" FileName="AgentR~1.dll|Agent.RV.dll" Version="65535.65535.65535.65535" Attributes="512" SourcePath="..\..\Agent.RV\bin\Debug\Agent.RV.dll" SelfReg="false" NextFile="Agent.RV.Service.exe" DigSign="true"/>
+    <ROW File="Interop.WUApiLib.dll_1" Component_="Interop.WUApiLib.dll_1" FileName="Intero~1.dll|Interop.WUApiLib.dll" Version="65535.65535.65535.65535" Attributes="512" SourcePath="..\..\Agent.RV\bin\Debug\Interop.WUApiLib.dll" SelfReg="false" NextFile="sas.dll"/>
+    <ROW File="Microsoft.Deployment.Compression.Cab.dll" Component_="Microsoft.Deployment.Compression.Cab.dll" FileName="Micros~1.dll|Microsoft.Deployment.Compression.Cab.dll" Version="65535.65535.65535.65535" Attributes="512" SourcePath="..\..\Agent.RV\bin\Debug\Microsoft.Deployment.Compression.Cab.dll" SelfReg="false" NextFile="Microsoft.Deployment.Compression.dll"/>
+    <ROW File="Microsoft.Deployment.Compression.dll" Component_="Microsoft.Deployment.Compression.dll" FileName="Micros~2.dll|Microsoft.Deployment.Compression.dll" Version="65535.65535.65535.65535" Attributes="512" SourcePath="..\..\Agent.RV\bin\Debug\Microsoft.Deployment.Compression.dll" SelfReg="false" NextFile="Newtonsoft.Json.dll"/>
+    <ROW File="NETFramework3.5SP1.aip" Component_="NETFramework3.5SP1.aip" FileName="NETFra~1.aip|.NET Framework 3.5 SP1.aip" Attributes="0" SourcePath=".NET Framework 3.5 SP1\.NET Framework 3.5 SP1.aip" SelfReg="false" NextFile="dotnetfx35setup.exe"/>
+    <ROW File="NLog.dll" Component_="NLog.dll" FileName="NLog.dll" Version="65535.65535.65535.65535" Attributes="512" SourcePath="..\..\Agent.Core\bin\Debug\NLog.dll" SelfReg="false" NextFile="Agent.RV.dll"/>
+    <ROW File="Newtonsoft.Json.dll" Component_="Newtonsoft.Json.dll" FileName="Newton~1.dll|Newtonsoft.Json.dll" Version="65535.65535.65535.65535" Attributes="512" SourcePath="..\..\Agent.Core\bin\Debug\Newtonsoft.Json.dll" SelfReg="false" NextFile="TpaService.exe.config"/>
+    <ROW File="PatchPayload.exe" Component_="PatchPayload.exe" FileName="PATCHP~1.EXE|PatchPayload.exe" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\PatchPayload\bin\Debug\PatchPayload.exe" SelfReg="false" DigSign="true"/>
+    <ROW File="RestSharp.dll" Component_="RestSharp.dll" FileName="RESTSH~1.DLL|RestSharp.dll" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\Agent.Core\bin\Debug\RestSharp.dll" SelfReg="false" NextFile="UpdateInstaller.exe"/>
+    <ROW File="TpaService.exe.config" Component_="agent.config" FileName="agent~1.con|agent.config" Version="65535.65535.65535.65535" Attributes="512" SourcePath="..\..\Agent.Core\agent.config" SelfReg="false" NextFile="NLog.dll"/>
+    <ROW File="UpdateInstaller.exe" Component_="UpdateInstaller.exe" FileName="UPDATE~1.EXE|UpdateInstaller.exe" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\UpdateInstaller\bin\Debug\UpdateInstaller.exe" SelfReg="false" NextFile="PatchPayload.exe" DigSign="true"/>
+    <ROW File="cygcrypto0.9.7.dll" Component_="cygcrypto0.9.7.dll" FileName="cygcry~1.dll|cygcrypto-0.9.7.dll" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\packages\exe\ssh\cygcrypto-0.9.7.dll" SelfReg="false" NextFile="cygminires.dll"/>
+    <ROW File="cygminires.dll" Component_="cygminires.dll" FileName="cygmin~1.dll|cygminires.dll" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\packages\exe\ssh\cygminires.dll" SelfReg="false" NextFile="cygwin1.dll"/>
+    <ROW File="cygwin1.dll" Component_="cygwin1.dll" FileName="cygwin1.dll" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\packages\exe\ssh\cygwin1.dll" SelfReg="false" NextFile="cygz.dll"/>
+    <ROW File="cygz.dll" Component_="cygz.dll" FileName="cygz.dll" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\packages\exe\ssh\cygz.dll" SelfReg="false" NextFile="scp.exe"/>
+    <ROW File="dotnetfx35setup.exe" Component_="dotnetfx35setup.exe" FileName="dotnet~1.exe|dotnetfx35setup.exe" Attributes="0" SourcePath=".NET Framework 3.5 SP1\dotnetfx35setup.exe" SelfReg="false" NextFile="RestSharp.dll" DigSign="true"/>
+    <ROW File="sas.dll" Component_="sas.dll" FileName="sas.dll" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\packages\exe\vnc\sas.dll" SelfReg="false" NextFile="screenhooks32.dll"/>
+    <ROW File="scp.exe" Component_="scp.exe" FileName="scp.exe" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\packages\exe\ssh\scp.exe" SelfReg="false" NextFile="sftp.exe"/>
+    <ROW File="screenhooks32.dll" Component_="screenhooks32.dll" FileName="screen~1.dll|screenhooks32.dll" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\packages\exe\vnc\screenhooks32.dll" SelfReg="false" NextFile="tvnserver.exe"/>
+    <ROW File="sftp.exe" Component_="sftp.exe" FileName="sftp.exe" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\packages\exe\ssh\sftp.exe" SelfReg="false" NextFile="sshagent.exe"/>
+    <ROW File="ssh.exe" Component_="ssh.exe" FileName="ssh.exe" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\packages\exe\ssh\ssh.exe" SelfReg="false" NextFile="NETFramework3.5SP1.aip"/>
+    <ROW File="sshagent.exe" Component_="sshagent.exe" FileName="ssh-ag~1.exe|ssh-agent.exe" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\packages\exe\ssh\ssh-agent.exe" SelfReg="false" NextFile="sshkeygen.exe"/>
+    <ROW File="sshkeygen.exe" Component_="sshkeygen.exe" FileName="ssh-ke~1.exe|ssh-keygen.exe" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\packages\exe\ssh\ssh-keygen.exe" SelfReg="false" NextFile="sshkeyscan.exe"/>
+    <ROW File="sshkeyscan.exe" Component_="sshkeyscan.exe" FileName="ssh-ke~2.exe|ssh-keyscan.exe" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\packages\exe\ssh\ssh-keyscan.exe" SelfReg="false" NextFile="ssh.exe"/>
+    <ROW File="tvnserver.exe" Component_="tvnserver.exe" FileName="tvnser~1.exe|tvnserver.exe" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\packages\exe\vnc\tvnserver.exe" SelfReg="false" NextFile="Agent.Monitoring.dll"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.AiRemoveFileComponent">
+    <ROW RemoveFile="_" Condition="(AI_CLEAN_RESOURCES_UNINSTALL = &quot;1&quot;) AND (NOT UPGRADINGPRODUCTCODE)" Options="3"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.BootstrOptComponent">
+    <ROW BootstrOptKey="GlobalOptions" GeneralOptions="qh" DownloadFolder="[AppDataFolder][|Manufacturer]\[|ProductName]\prerequisites" EulaPathLocId="*" IntroTextPathLocId="*"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.BuildComponent">
+    <ROW BuildKey="DefaultBuild" BuildName="ExeBuild" BuildOrder="1" BuildType="1" PackageFolder="..\..\.." PackageFileName="TopPatchAgent" Languages="en" InstallationType="4" CabsLocation="1" PackageType="1" FilesInsideExe="true" ExeIconPath="TopPatchIcon.ico" ExtractionFolder="[AppDataFolder][|Manufacturer]\[|ProductName] [|ProductVersion]\install" ExtUI="true" UseLargeSchema="true" MsiPackageType="AI_ALL" UACExecutionLevel="2"/>
+    <ATTRIBUTE name="CurrentBuild" value="DefaultBuild"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.CacheComponent">
+    <ATTRIBUTE name="Enable" value="false"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.DictionaryComponent">
+    <ROW Path="&lt;AI_DICTS&gt;ui.ail"/>
+    <ROW Path="&lt;AI_DICTS&gt;ui_en.ail"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.DigCertStoreComponent">
+    <ROW TimeStampUrl="http://timestamp.digicert.com" SignerDescription="Toppatch Agent" SignOptions="7" SignTool="0" Thumbprint="8bef4449b0ebb8264a2b450b0c88c0e6fec0c29a Subject: Top Patch Inc.&#10;Issuer: DigiCert EV Code Signing CA&#10;Valid from 06/23/2013 to 06/06/2016"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.FirewallExceptionComponent">
+    <ROW FirewallException="Agent.RV.Service.exe" DisplayName="Agent.RV.Service.exe" Enabled="1" Scope="*" Condition="((?Agent.RV.Service.exe=2) AND ($Agent.RV.Service.exe=3))" Profiles="0" AppPath="[#Agent.RV.Service.exe]"/>
+    <ROW FirewallException="Agent.RV.WatcherService.exe" DisplayName="Agent.RV.WatcherService.exe" Enabled="1" Scope="*" Condition="((?Agent.RV.WatcherService.exe=2) AND ($Agent.RV.WatcherService.exe=3))" Profiles="0" AppPath="[#Agent.RV.WatcherService.exe]"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.FragmentComponent">
+    <ROW Fragment="CommonUI.aip" Path="&lt;AI_FRAGS&gt;CommonUI.aip"/>
+    <ROW Fragment="MaintenanceTypeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\MaintenanceTypeDlg.aip"/>
+    <ROW Fragment="MaintenanceWelcomeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\MaintenanceWelcomeDlg.aip"/>
+    <ROW Fragment="SequenceDialogs.aip" Path="&lt;AI_THEMES&gt;classic\fragments\SequenceDialogs.aip"/>
+    <ROW Fragment="Sequences.aip" Path="&lt;AI_FRAGS&gt;Sequences.aip"/>
+    <ROW Fragment="StaticUIStrings.aip" Path="&lt;AI_FRAGS&gt;StaticUIStrings.aip"/>
+    <ROW Fragment="UI.aip" Path="&lt;AI_THEMES&gt;classic\fragments\UI.aip"/>
+    <ROW Fragment="Validation.aip" Path="&lt;AI_FRAGS&gt;Validation.aip"/>
+    <ROW Fragment="VerifyRemoveDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\VerifyRemoveDlg.aip"/>
+    <ROW Fragment="VerifyRepairDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\VerifyRepairDlg.aip"/>
+    <ROW Fragment="WelcomeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\WelcomeDlg.aip"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiActionTextComponent">
+    <ROW Action="AI_AiRemoveFilesCommit" Description="Executing file removal operations" Template="Executing file removal: [1]" DescriptionLocId="ActionText.Description.AI_AiRemoveFilesCommit" TemplateLocId="ActionText.Template.AI_AiRemoveFilesCommit"/>
+    <ROW Action="AI_AiRemoveFilesDeferred_Permanent" Description="Preparing files for removal" Template="Preparing file: [1]" DescriptionLocId="ActionText.Description.AI_AiRemoveFilesDeferred_Permanent" TemplateLocId="ActionText.Template.AI_AiRemoveFilesDeferred_Permanent"/>
+    <ROW Action="AI_AiRemoveFilesDeferred_Undoable" Description="Preparing files for removal" Template="Preparing file: [1]" DescriptionLocId="ActionText.Description.AI_AiRemoveFilesDeferred_Undoable" TemplateLocId="ActionText.Template.AI_AiRemoveFilesDeferred_Undoable"/>
+    <ROW Action="AI_AiRemoveFilesImmediate" Description="Preparing files for removal" Template="Preparing file: [1]" DescriptionLocId="ActionText.Description.AI_AiRemoveFilesImmediate" TemplateLocId="ActionText.Template.AI_AiRemoveFilesImmediate"/>
+    <ROW Action="AI_AiRemoveFilesRollback" Description="Restoring removed files" Template="Restoring file: [1]" DescriptionLocId="ActionText.Description.AI_AiRemoveFilesRollback" TemplateLocId="ActionText.Template.AI_AiRemoveFilesRollback"/>
+    <ROW Action="AI_ConfigureChainer" Description="ActionText.Description.AI_ConfigureChainer" DescriptionLocId="ActionText.Description.AI_ConfigureChainer"/>
+    <ROW Action="AI_DeleteLzma" Description="Deleting files extracted from archive" DescriptionLocId="ActionText.Description.AI_DeleteLzma" TemplateLocId="-"/>
+    <ROW Action="AI_DeleteRLzma" Description="Deleting files extracted from archive" DescriptionLocId="ActionText.Description.AI_DeleteLzma" TemplateLocId="-"/>
+    <ROW Action="AI_DownloadPrereq" Description="Downloading prerequisite software" Template="Downloading [1]{[2] completed}" DescriptionLocId="ActionText.Description.AI_DownloadPrereq" TemplateLocId="ActionText.Template.AI_DownloadPrereq"/>
+    <ROW Action="AI_ExtractFiles" Description="Extracting files from archive" DescriptionLocId="ActionText.Description.AI_ExtractLzma" TemplateLocId="-"/>
+    <ROW Action="AI_ExtractLzma" Description="Extracting files from archive" DescriptionLocId="ActionText.Description.AI_ExtractLzma" TemplateLocId="-"/>
+    <ROW Action="AI_ExtractPrereq" Description="Extracting prerequisite software" Template="Extracting [1]{[2] completed}" DescriptionLocId="ActionText.Description.AI_ExtractPrereq" TemplateLocId="ActionText.Template.AI_ExtractPrereq"/>
+    <ROW Action="AI_FwConfig" Description="Executing Windows Firewall configurations" Template="Configuring Windows Firewall rule: &quot;[1]&quot;" DescriptionLocId="ActionText.Description.AI_FwConfig" TemplateLocId="ActionText.Template.AI_FwConfig"/>
+    <ROW Action="AI_FwInstall" Description="Generating actions to configure Windows Firewall" DescriptionLocId="ActionText.Description.AI_FwInstall"/>
+    <ROW Action="AI_FwRemove" Description="Executing Windows Firewall configurations" Template="Configuring Windows Firewall rule:  &quot;[1]&quot;" DescriptionLocId="ActionText.Description.AI_FwRemove" TemplateLocId="ActionText.Template.AI_FwRemove"/>
+    <ROW Action="AI_FwRollback" Description="Rolling back Windows Firewall configurations." Template="Rolling back Windows Firewall configurations." DescriptionLocId="ActionText.Description.AI_FwRollback" TemplateLocId="ActionText.Template.AI_FwRollback"/>
+    <ROW Action="AI_FwUninstall" Description="Generating actions to configure Windows Firewall" DescriptionLocId="ActionText.Description.AI_FwUninstall"/>
+    <ROW Action="AI_InstallPostPrerequisite" Description="Installing prerequisite software" Template="Installing [1]{[2] completed}" DescriptionLocId="ActionText.Description.AI_InstallPrerequisite" TemplateLocId="ActionText.Template.AI_InstallPrerequisite"/>
+    <ROW Action="AI_InstallPrerequisite" Description="Installing prerequisite software" Template="Installing [1]{[2] completed}" DescriptionLocId="ActionText.Description.AI_InstallPrerequisite" TemplateLocId="ActionText.Template.AI_InstallPrerequisite"/>
+    <ROW Action="AI_VerifyPrereq" Description="Verifying prerequisites" Template="[1] was not installed correctly." DescriptionLocId="ActionText.Description.AI_VerifyPrereq" TemplateLocId="ActionText.Template.AI_VerifyPrereq"/>
+    <ROW Action="AI_WinOptFeaturesConfig" Description="Configuring Windows features." Template="Configuring Windows features." DescriptionLocId="ActionText.Description.AI_WinOptFeaturesConfig" TemplateLocId="ActionText.Template.AI_WinOptFeaturesConfig"/>
+    <ROW Action="AI_WinOptFeaturesInstall" Description="Generating actions to configure Windows features." Template="Configuring Windows features." DescriptionLocId="ActionText.Description.AI_WinOptFeaturesInstall" TemplateLocId="ActionText.Template.AI_WinOptFeaturesInstall"/>
+    <ROW Action="AI_WinOptFeaturesRemove" Description="Removing configured Windows features." Template="Removing configured Windows features." DescriptionLocId="ActionText.Description.AI_WinOptFeaturesRemove" TemplateLocId="ActionText.Template.AI_WinOptFeaturesRemove"/>
+    <ROW Action="AI_WinOptFeaturesRollback" Description="Rolling back configured Windows features." Template="Rolling back configured Windows features." DescriptionLocId="ActionText.Description.AI_WinOptFeaturesRollback" TemplateLocId="ActionText.Template.AI_WinOptFeaturesRollback"/>
+    <ROW Action="AI_WinOptFeaturesUninstall" Description="Generating actions to configure Windows features." Template="Removing configured Windows features." DescriptionLocId="ActionText.Description.AI_WinOptFeaturesUninstall" TemplateLocId="ActionText.Template.AI_WinOptFeaturesUninstall"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiAppSearchComponent">
+    <ROW Property="AI_SETUPEXEPATH" Signature_="AI_EXE_PATH_CU" Builds="DefaultBuild"/>
+    <ROW Property="AI_SETUPEXEPATH" Signature_="AI_EXE_PATH_LM" Builds="DefaultBuild"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiBinaryComponent">
+    <ROW Name="CustomAction.CA.dll_1" SourcePath="..\CustomAction\bin\Debug\CustomAction.CA.dll"/>
+    <ROW Name="NetFirewall.dll" SourcePath="&lt;AI_CUSTACTS&gt;NetFirewall.dll"/>
+    <ROW Name="Prereq.dll" SourcePath="&lt;AI_CUSTACTS&gt;Prereq.dll"/>
+    <ROW Name="ResourceCleaner.dll" SourcePath="&lt;AI_CUSTACTS&gt;ResourceCleaner.dll"/>
+    <ROW Name="TopPatchSetupImage.jpg" SourcePath="TopPatchSetupImage.jpg"/>
+    <ROW Name="TopRightIcon.jpg" SourcePath="TopRightIcon.jpg"/>
+    <ROW Name="WinOptionalFeatures.dll" SourcePath="&lt;AI_CUSTACTS&gt;WinOptionalFeatures.dll"/>
+    <ROW Name="aicustact.dll" SourcePath="&lt;AI_CUSTACTS&gt;aicustact.dll"/>
+    <ROW Name="aipackagechainer.exe" SourcePath="&lt;AI_CUSTACTS&gt;aipackagechainer.exe"/>
+    <ROW Name="frame_bottom_left.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_bottom_left.bmp"/>
+    <ROW Name="frame_bottom_left_inactive.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_bottom_left_inactive.bmp"/>
+    <ROW Name="frame_bottom_mid.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_bottom_mid.bmp"/>
+    <ROW Name="frame_bottom_mid_inactive.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_bottom_mid_inactive.bmp"/>
+    <ROW Name="frame_bottom_right.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_bottom_right.bmp"/>
+    <ROW Name="frame_bottom_right_inactive.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_bottom_right_inactive.bmp"/>
+    <ROW Name="frame_caption.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_caption.bmp"/>
+    <ROW Name="frame_caption_inactive.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_caption_inactive.bmp"/>
+    <ROW Name="frame_left.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_left.bmp"/>
+    <ROW Name="frame_left_inactive.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_left_inactive.bmp"/>
+    <ROW Name="frame_right.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_right.bmp"/>
+    <ROW Name="frame_right_inactive.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_right_inactive.bmp"/>
+    <ROW Name="frame_top_left.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_top_left.bmp"/>
+    <ROW Name="frame_top_left_inactive.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_top_left_inactive.bmp"/>
+    <ROW Name="frame_top_mid.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_top_mid.bmp"/>
+    <ROW Name="frame_top_mid_inactive.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_top_mid_inactive.bmp"/>
+    <ROW Name="frame_top_right.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_top_right.bmp"/>
+    <ROW Name="frame_top_right_inactive.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_top_right_inactive.bmp"/>
+    <ROW Name="lzmaextractor.dll" SourcePath="&lt;AI_CUSTACTS&gt;lzmaextractor.dll"/>
+    <ROW Name="sys_close_down.bmp" SourcePath="&lt;AI_FRAME_BTNS&gt;sys_close_down.bmp"/>
+    <ROW Name="sys_close_hot.bmp" SourcePath="&lt;AI_FRAME_BTNS&gt;sys_close_hot.bmp"/>
+    <ROW Name="sys_close_inactive.bmp" SourcePath="&lt;AI_FRAME_BTNS&gt;sys_close_inactive.bmp"/>
+    <ROW Name="sys_close_normal.bmp" SourcePath="&lt;AI_FRAME_BTNS&gt;sys_close_normal.bmp"/>
+    <ROW Name="sys_min_down.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;sys_min_down.bmp"/>
+    <ROW Name="sys_min_hot.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;sys_min_hot.bmp"/>
+    <ROW Name="sys_min_inactive.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;sys_min_inactive.bmp"/>
+    <ROW Name="sys_min_normal.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;sys_min_normal.bmp"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiCheckBoxComponent">
+    <ROW Property="REBOOTPENDING_CHECKBOX"/>
+    <ROW Property="CHECKBOX_1_PROP_2"/>
+    <ROW Property="WSUS_CHECKBOX"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiConditionComponent">
+    <ROW Feature_="AI32BitFiles" Level="1" Condition="VersionNT64"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiControlComponent">
+    <ROW Dialog_="AdminBrowseDlg" Control="BottomLine" Type="Line" X="4" Y="234" Width="365" Height="2" Attributes="1" Order="200" MsiKey="AdminBrowseDlg#BottomLine"/>
+    <ROW Dialog_="AdminBrowseDlg" Control="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" Attributes="1048577" Text="[BannerBitmap]" Order="1200" MsiKey="AdminBrowseDlg#BannerBitmap"/>
+    <ROW Dialog_="AdminBrowseDlg" Control="Title" Type="Text" X="14" Y="5" Width="200" Height="15" Attributes="65539" Text="Change current destination folder" TextStyle="[DlgTitleFont]" Order="1300" TextLocId="Control.Text.AdminBrowseDlg#Title" MsiKey="AdminBrowseDlg#Title"/>
+    <ROW Dialog_="AdminBrowseDlg" Control="Description" Type="Text" X="25" Y="21" Width="280" Height="23" Attributes="196611" Text="Browse to the destination folder" Order="1400" TextLocId="Control.Text.AdminBrowseDlg#Description" MsiKey="AdminBrowseDlg#Description"/>
+    <ROW Dialog_="AdminInstallPointDlg" Control="BottomLine" Type="Line" X="4" Y="234" Width="365" Height="2" Attributes="1" Order="400" MsiKey="AdminInstallPointDlg#BottomLine"/>
+    <ROW Dialog_="AdminInstallPointDlg" Control="Back" Type="PushButton" X="168" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Back]" Order="600" TextLocId="-" MsiKey="AdminInstallPointDlg#Back" Options="1"/>
+    <ROW Dialog_="AdminInstallPointDlg" Control="Next" Type="PushButton" X="230" Y="243" Width="68" Height="17" Attributes="3" Text="[ButtonText_Next]" Order="700" TextLocId="-" MsiKey="AdminInstallPointDlg#Next" Options="1"/>
+    <ROW Dialog_="AdminInstallPointDlg" Control="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" Attributes="1048577" Text="[BannerBitmap]" Order="900" MsiKey="AdminInstallPointDlg#BannerBitmap"/>
+    <ROW Dialog_="AdminInstallPointDlg" Control="Title" Type="Text" X="14" Y="5" Width="200" Height="15" Attributes="196611" Text="Network Location" TextStyle="[DlgTitleFont]" Order="1000" TextLocId="Control.Text.AdminInstallPointDlg#Title" MsiKey="AdminInstallPointDlg#Title"/>
+    <ROW Dialog_="AdminWelcomeDlg" Control="Next" Type="PushButton" X="230" Y="243" Width="68" Height="17" Attributes="3" Text="[ButtonText_Next]" Order="100" TextLocId="-" MsiKey="AdminWelcomeDlg#Next" Options="1"/>
+    <ROW Dialog_="AdminWelcomeDlg" Control="Bitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="234" Attributes="1048577" Text="[DialogBitmap]" Order="300" MsiKey="AdminWelcomeDlg#Bitmap"/>
+    <ROW Dialog_="AdminWelcomeDlg" Control="Back" Type="PushButton" X="168" Y="243" Width="56" Height="17" Attributes="1" Text="[ButtonText_Back]" Order="400" TextLocId="-" MsiKey="AdminWelcomeDlg#Back" Options="1"/>
+    <ROW Dialog_="BrowseDlg" Control="BottomLine" Type="Line" X="4" Y="234" Width="365" Height="2" Attributes="1" Order="200" MsiKey="BrowseDlg#BottomLine"/>
+    <ROW Dialog_="BrowseDlg" Control="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" Attributes="1048577" Text="[BannerBitmap]" Order="1200" MsiKey="BrowseDlg#BannerBitmap"/>
+    <ROW Dialog_="BrowseDlg" Control="Title" Type="Text" X="14" Y="5" Width="200" Height="15" Attributes="196611" Text="Change current destination folder" TextStyle="[DlgTitleFont]" Order="1300" TextLocId="Control.Text.BrowseDlg#Title" MsiKey="BrowseDlg#Title"/>
+    <ROW Dialog_="BrowseDlg" Control="Description" Type="Text" X="25" Y="21" Width="280" Height="23" Attributes="196611" Text="Browse to the destination folder" Order="1400" TextLocId="Control.Text.BrowseDlg#Description" MsiKey="BrowseDlg#Description"/>
+    <ROW Dialog_="ChecklistDlg" Control="TemplateDlgDialogInitializer" Type="DialogInitializer" X="0" Y="0" Width="0" Height="0" Attributes="0" Order="-1" TextLocId="-" HelpLocId="-" ExtDataLocId="-"/>
+    <ROW Dialog_="ChecklistDlg" Control="Next" Type="PushButton" X="230" Y="243" Width="68" Height="17" Attributes="3" Text="[ButtonText_Next]" Order="100" TextLocId="-" Options="1"/>
+    <ROW Dialog_="ChecklistDlg" Control="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Cancel]" Order="200" TextLocId="-" Options="1"/>
+    <ROW Dialog_="ChecklistDlg" Control="Back" Type="PushButton" X="168" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Back]" Order="300" TextLocId="-" Options="1"/>
+    <ROW Dialog_="ChecklistDlg" Control="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" Attributes="1048577" Text="[BannerBitmap]" Order="400"/>
+    <ROW Dialog_="ChecklistDlg" Control="BannerLine" Type="Line" X="0" Y="44" Width="372" Height="0" Attributes="1" Order="500"/>
+    <ROW Dialog_="ChecklistDlg" Control="BottomLine" Type="Line" X="5" Y="234" Width="368" Height="0" Attributes="1" Order="600"/>
+    <ROW Dialog_="ChecklistDlg" Control="Description" Type="Text" X="25" Y="18" Width="280" Height="20" Attributes="196611" Text="Checking system pre-requisites before proceeding with the TopPatch Agent installation." Order="700"/>
+    <ROW Dialog_="ChecklistDlg" Control="Logo" Type="Text" X="4" Y="228" Width="70" Height="12" Attributes="1" Text="TopPatch Installer" Order="800"/>
+    <ROW Dialog_="ChecklistDlg" Control="Title" Type="Text" X="14" Y="5" Width="200" Height="15" Attributes="196611" Text="Pre-requisites" TextStyle="[DlgTitleFont]" Order="900"/>
+    <ROW Dialog_="ChecklistDlg" Control="GroupBox_1" Type="GroupBox" X="12" Y="72" Width="344" Height="100" Attributes="1" Text="Check list" Order="1000"/>
+    <ROW Dialog_="ChecklistDlg" Control="chkServerReachable" Type="CheckBox" X="44" Y="136" Width="302" Height="13" Attributes="3" Property="CHECKBOX_1_PROP_2" Text="Checking connection with RemediationVault server..." TextStyle="DlgFontBold8" Order="1100"/>
+    <ROW Dialog_="CustomizeDlg" Control="BottomLine" Type="Line" X="4" Y="234" Width="365" Height="2" Attributes="1" Order="500" MsiKey="CustomizeDlg#BottomLine"/>
+    <ROW Dialog_="CustomizeDlg" Control="Back" Type="PushButton" X="168" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Back]" Order="700" TextLocId="-" MsiKey="CustomizeDlg#Back" Options="1"/>
+    <ROW Dialog_="CustomizeDlg" Control="Next" Type="PushButton" X="230" Y="243" Width="68" Height="17" Attributes="3" Text="[ButtonText_Next]" Order="800" TextLocId="-" MsiKey="CustomizeDlg#Next" Options="1"/>
+    <ROW Dialog_="CustomizeDlg" Control="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" Attributes="1048577" Text="[BannerBitmap]" Order="1000" MsiKey="CustomizeDlg#BannerBitmap"/>
+    <ROW Dialog_="CustomizeDlg" Control="Description" Type="Text" X="25" Y="21" Width="280" Height="23" Attributes="196611" Text="Select the way you want features to be installed." Order="1300" TextLocId="Control.Text.CustomizeDlg#Description" MsiKey="CustomizeDlg#Description"/>
+    <ROW Dialog_="CustomizeDlg" Control="Title" Type="Text" X="14" Y="5" Width="200" Height="15" Attributes="196611" Text="Custom Setup" TextStyle="[DlgTitleFont]" Order="1800" TextLocId="Control.Text.CustomizeDlg#Title" MsiKey="CustomizeDlg#Title"/>
+    <ROW Dialog_="DiskCostDlg" Control="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" Attributes="1048577" Text="[BannerBitmap]" Order="200" MsiKey="DiskCostDlg#BannerBitmap"/>
+    <ROW Dialog_="DiskCostDlg" Control="BottomLine" Type="Line" X="4" Y="234" Width="365" Height="2" Attributes="1" Order="300" MsiKey="DiskCostDlg#BottomLine"/>
+    <ROW Dialog_="DiskCostDlg" Control="Title" Type="Text" X="14" Y="5" Width="200" Height="15" Attributes="196611" Text="Disk Space Requirements" TextStyle="[DlgTitleFont]" Order="600" TextLocId="Control.Text.DiskCostDlg#Title" MsiKey="DiskCostDlg#Title"/>
+    <ROW Dialog_="ExitDialog" Control="Bitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="234" Attributes="1048577" Text="[DialogBitmap]" Order="300" MsiKey="ExitDialog#Bitmap"/>
+    <ROW Dialog_="ExitDialog" Control="Back" Type="PushButton" X="168" Y="243" Width="56" Height="17" Attributes="1" Text="[ButtonText_Back]" Order="400" TextLocId="-" MsiKey="ExitDialog#Back" Options="1"/>
+    <ROW Dialog_="ExitDialog" Control="ViewReadmeCheckBox" Type="CheckBox" X="148" Y="140" Width="10" Height="10" Attributes="3" Property="VIEWREADME" Order="500" MsiKey="ExitDialog#ViewReadmeCheckBox" Options="1"/>
+    <ROW Dialog_="ExitDialog" Control="Title" Type="Text" X="135" Y="20" Width="220" Height="60" Attributes="196611" Text="Completing the [ProductName] [Wizard]" TextStyle="VerdanaBold13" Order="600" TextLocId="Control.Text.ExitDialog#Title" MsiKey="ExitDialog#Title"/>
+    <ROW Dialog_="ExitDialog" Control="LaunchProdCheckBox" Type="CheckBox" X="148" Y="122" Width="10" Height="10" Attributes="3" Property="RUNAPPLICATION" Order="700" MsiKey="ExitDialog#LaunchProdCheckBox" Options="1"/>
+    <ROW Dialog_="ExitDialog" Control="Description" Type="Text" X="135" Y="86" Width="220" Height="20" Attributes="196611" Text="Click the &quot;Finish&quot; button to exit the [Wizard]." Order="800" TextLocId="Control.Text.ExitDialog#Description" MsiKey="ExitDialog#Description"/>
+    <ROW Dialog_="ExitDialog" Control="BottomLine" Type="Line" X="0" Y="234" Width="372" Height="0" Attributes="1" Order="900" MsiKey="ExitDialog#BottomLine"/>
+    <ROW Dialog_="FatalError" Control="Bitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="234" Attributes="1048577" Text="[DialogBitmap]" Order="300" MsiKey="FatalError#Bitmap"/>
+    <ROW Dialog_="FatalError" Control="Back" Type="PushButton" X="168" Y="243" Width="56" Height="17" Attributes="1" Text="[ButtonText_Back]" Order="400" TextLocId="-" MsiKey="FatalError#Back" Options="1"/>
+    <ROW Dialog_="FilesInUse" Control="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" Attributes="1048577" Text="[BannerBitmap]" Order="400" MsiKey="FilesInUse#BannerBitmap"/>
+    <ROW Dialog_="FilesInUse" Control="BottomLine" Type="Line" X="4" Y="234" Width="365" Height="2" Attributes="1" Order="500" MsiKey="FilesInUse#BottomLine"/>
+    <ROW Dialog_="FilesInUse" Control="Title" Type="Text" X="14" Y="5" Width="200" Height="15" Attributes="196611" Text="Files in Use" TextStyle="[DlgTitleFont]" Order="700" TextLocId="Control.Text.FilesInUse#Title" MsiKey="FilesInUse#Title"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control="ChangeButton" Type="PushButton" X="150" Y="173" Width="38" Height="38" Attributes="5767168" Text="[CustomSetupIcon]" Help="Modify Installation|" Order="100" HelpLocId="Control.Help.MaintenanceTypeDlg#ChangeButton" MsiKey="MaintenanceTypeDlg#ChangeButton"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control="RepairLabel" Type="Text" X="105" Y="114" Width="100" Height="10" Attributes="3" Text="Re&amp;pair" TextStyle="[DlgTitleFont]" Order="200" TextLocId="Control.Text.MaintenanceTypeDlg#RepairLabel" MsiKey="MaintenanceTypeDlg#RepairLabel"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control="RepairButton" Type="PushButton" X="50" Y="114" Width="38" Height="38" Attributes="5767171" Text="[RepairIcon]" Help="Repair Installation|" Order="300" HelpLocId="Control.Help.MaintenanceTypeDlg#RepairButton" MsiKey="MaintenanceTypeDlg#RepairButton"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control="RemoveLabel" Type="Text" X="105" Y="62" Width="100" Height="10" Attributes="3" Text="&amp;Remove" TextStyle="[DlgTitleFont]" Order="400" TextLocId="Control.Text.MaintenanceTypeDlg#RemoveLabel" MsiKey="MaintenanceTypeDlg#RemoveLabel"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control="RemoveButton" Type="PushButton" X="50" Y="62" Width="38" Height="38" Attributes="5767171" Text="[RemoveIcon]" Help="Remove Installation|" Order="500" HelpLocId="Control.Help.MaintenanceTypeDlg#RemoveButton" MsiKey="MaintenanceTypeDlg#RemoveButton"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control="Back" Type="PushButton" X="168" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Back]" Order="600" TextLocId="-" MsiKey="MaintenanceTypeDlg#Back" Options="1"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control="Next" Type="PushButton" X="230" Y="243" Width="68" Height="17" Attributes="1" Text="[ButtonText_Next]" Order="700" TextLocId="-" MsiKey="MaintenanceTypeDlg#Next" Options="1"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Cancel]" Order="800" TextLocId="-" MsiKey="MaintenanceTypeDlg#Cancel" Options="1"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" Attributes="1048577" Text="[BannerBitmap]" Order="900" MsiKey="MaintenanceTypeDlg#BannerBitmap"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control="BottomLine" Type="Line" X="4" Y="234" Width="365" Height="2" Attributes="1" Order="1000" MsiKey="MaintenanceTypeDlg#BottomLine"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control="Logo" Type="Text" X="4" Y="228" Width="70" Height="12" Attributes="1" Text="Advanced Installer" Order="1100" TextLocId="Control.Text.MaintenanceTypeDlg#Logo" MsiKey="MaintenanceTypeDlg#Logo"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control="Description" Type="Text" X="25" Y="23" Width="280" Height="20" Attributes="196611" Text="Select the operation you wish to perform." Order="1200" TextLocId="Control.Text.MaintenanceTypeDlg#Description" MsiKey="MaintenanceTypeDlg#Description"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control="BannerLine" Type="Line" X="0" Y="44" Width="372" Height="0" Attributes="1" Order="1300" MsiKey="MaintenanceTypeDlg#BannerLine"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control="Title" Type="Text" X="15" Y="6" Width="240" Height="15" Attributes="196611" Text="Modify, Repair or Remove installation" TextStyle="[DlgTitleFont]" Order="1400" TextLocId="Control.Text.MaintenanceTypeDlg#Title" MsiKey="MaintenanceTypeDlg#Title"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control="RepairText" Type="Text" X="105" Y="127" Width="230" Height="30" Attributes="3" Text="Repairs errors in the most recent installation state - fixes missing or corrupt files, shortcuts and registry entries." Order="1500" TextLocId="Control.Text.MaintenanceTypeDlg#RepairText" MsiKey="MaintenanceTypeDlg#RepairText"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control="RemoveText" Type="Text" X="105" Y="71" Width="230" Height="20" Attributes="3" Text="Removes [ProductName] from your computer." Order="1600" TextLocId="Control.Text.MaintenanceTypeDlg#RemoveText" MsiKey="MaintenanceTypeDlg#RemoveText"/>
+    <ROW Dialog_="MaintenanceWelcomeDlg" Control="Next" Type="PushButton" X="230" Y="243" Width="68" Height="17" Attributes="3" Text="[ButtonText_Next]" Order="100" TextLocId="-" MsiKey="MaintenanceWelcomeDlg#Next" Options="1"/>
+    <ROW Dialog_="MaintenanceWelcomeDlg" Control="Bitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="234" Attributes="1048577" Text="[DialogBitmap]" Order="300" MsiKey="MaintenanceWelcomeDlg#Bitmap"/>
+    <ROW Dialog_="MaintenanceWelcomeDlg" Control="Back" Type="PushButton" X="168" Y="243" Width="56" Height="17" Attributes="1" Text="[ButtonText_Back]" Order="400" TextLocId="-" MsiKey="MaintenanceWelcomeDlg#Back" Options="1"/>
+    <ROW Dialog_="MsiRMFilesInUse" Control="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" Attributes="1048577" Text="[BannerBitmap]" Order="300" MsiKey="MsiRMFilesInUse#BannerBitmap"/>
+    <ROW Dialog_="MsiRMFilesInUse" Control="BottomLine" Type="Line" X="4" Y="234" Width="365" Height="2" Attributes="1" Order="1000" MsiKey="MsiRMFilesInUse#BottomLine"/>
+    <ROW Dialog_="NewDialog" Control="Next" Type="PushButton" X="230" Y="243" Width="68" Height="17" Attributes="3" Text="[ButtonText_Next]" Order="100" TextLocId="-" Options="1"/>
+    <ROW Dialog_="NewDialog" Control="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Cancel]" Order="200" TextLocId="-" Options="1"/>
+    <ROW Dialog_="NewDialog" Control="Back" Type="PushButton" X="168" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Back]" Order="300" TextLocId="-" Options="1"/>
+    <ROW Dialog_="NewDialog" Control="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" Attributes="1048577" Text="[BannerBitmap]" Order="400"/>
+    <ROW Dialog_="NewDialog" Control="BannerLine" Type="Line" X="0" Y="44" Width="372" Height="0" Attributes="1" Order="500"/>
+    <ROW Dialog_="NewDialog" Control="BottomLine" Type="Line" X="4" Y="234" Width="365" Height="2" Attributes="1" Order="600"/>
+    <ROW Dialog_="NewDialog" Control="Description" Type="Text" X="25" Y="18" Width="280" Height="20" Attributes="196611" Text="New Dialog Description..." Order="700"/>
+    <ROW Dialog_="NewDialog" Control="Logo" Type="Text" X="4" Y="228" Width="70" Height="12" Attributes="1" Text="Advanced Installer" Order="800"/>
+    <ROW Dialog_="NewDialog" Control="Title" Type="Text" X="14" Y="5" Width="200" Height="15" Attributes="196611" Text="New Dialog" TextStyle="[DlgTitleFont]" Order="900"/>
+    <ROW Dialog_="NewDialog_1" Control="Next" Type="PushButton" X="230" Y="243" Width="68" Height="17" Attributes="3" Text="[ButtonText_Next]" Order="100" TextLocId="-" Options="1"/>
+    <ROW Dialog_="NewDialog_1" Control="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Cancel]" Order="200" TextLocId="-" Options="1"/>
+    <ROW Dialog_="NewDialog_1" Control="Back" Type="PushButton" X="168" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Back]" Order="300" TextLocId="-" Options="1"/>
+    <ROW Dialog_="NewDialog_1" Control="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" Attributes="1048577" Text="[BannerBitmap]" Order="400"/>
+    <ROW Dialog_="NewDialog_1" Control="BannerLine" Type="Line" X="0" Y="44" Width="372" Height="0" Attributes="1" Order="500"/>
+    <ROW Dialog_="NewDialog_1" Control="BottomLine" Type="Line" X="4" Y="234" Width="365" Height="2" Attributes="1" Order="600"/>
+    <ROW Dialog_="NewDialog_1" Control="Description" Type="Text" X="25" Y="18" Width="280" Height="20" Attributes="196611" Text="New Dialog Description..." Order="700"/>
+    <ROW Dialog_="NewDialog_1" Control="Logo" Type="Text" X="4" Y="228" Width="70" Height="12" Attributes="1" Text="Advanced Installer" Order="800"/>
+    <ROW Dialog_="NewDialog_1" Control="Title" Type="Text" X="14" Y="5" Width="200" Height="15" Attributes="196611" Text="New Dialog" TextStyle="[DlgTitleFont]" Order="900"/>
+    <ROW Dialog_="NewSeqDialog" Control="Next" Type="PushButton" X="230" Y="243" Width="68" Height="17" Attributes="3" Text="[ButtonText_Next]" Order="100" TextLocId="-" Options="1"/>
+    <ROW Dialog_="NewSeqDialog" Control="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Cancel]" Order="200" TextLocId="-" Options="1"/>
+    <ROW Dialog_="NewSeqDialog" Control="Bitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="234" Attributes="1048577" Text="[DialogBitmap]" Order="300"/>
+    <ROW Dialog_="NewSeqDialog" Control="Back" Type="PushButton" X="168" Y="243" Width="56" Height="17" Attributes="1" Text="[ButtonText_Back]" Order="400" TextLocId="-" Options="1"/>
+    <ROW Dialog_="NewSeqDialog" Control="Title" Type="Text" X="135" Y="20" Width="220" Height="60" Attributes="196611" Text="New Dialog" TextStyle="VerdanaBold13" Order="500"/>
+    <ROW Dialog_="NewSeqDialog" Control="Description" Type="Text" X="135" Y="86" Width="220" Height="60" Attributes="196611" Text="New Dialog Description..." Order="600"/>
+    <ROW Dialog_="NewSeqDialog" Control="BottomLine" Type="Line" X="0" Y="234" Width="372" Height="0" Attributes="1" Order="700"/>
+    <ROW Dialog_="OutOfDiskDlg" Control="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" Attributes="1048577" Text="[BannerBitmap]" Order="200" MsiKey="OutOfDiskDlg#BannerBitmap"/>
+    <ROW Dialog_="OutOfDiskDlg" Control="BottomLine" Type="Line" X="4" Y="234" Width="365" Height="2" Attributes="1" Order="300" MsiKey="OutOfDiskDlg#BottomLine"/>
+    <ROW Dialog_="OutOfDiskDlg" Control="Title" Type="Text" X="14" Y="5" Width="200" Height="15" Attributes="196611" Text="Out of Disk Space" TextStyle="[DlgTitleFont]" Order="600" TextLocId="Control.Text.OutOfDiskDlg#Title" MsiKey="OutOfDiskDlg#Title"/>
+    <ROW Dialog_="OutOfRbDiskDlg" Control="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" Attributes="1048577" Text="[BannerBitmap]" Order="300" MsiKey="OutOfRbDiskDlg#BannerBitmap"/>
+    <ROW Dialog_="OutOfRbDiskDlg" Control="BottomLine" Type="Line" X="4" Y="234" Width="365" Height="2" Attributes="1" Order="400" MsiKey="OutOfRbDiskDlg#BottomLine"/>
+    <ROW Dialog_="OutOfRbDiskDlg" Control="Title" Type="Text" X="14" Y="5" Width="200" Height="15" Attributes="196611" Text="Out of Disk Space" TextStyle="[DlgTitleFont]" Order="1100" TextLocId="Control.Text.OutOfRbDiskDlg#Title" MsiKey="OutOfRbDiskDlg#Title"/>
+    <ROW Dialog_="PatchWelcomeDlg" Control="Next" Type="PushButton" X="230" Y="243" Width="68" Height="17" Attributes="3" Text="[ButtonText_Next]" Order="100" TextLocId="-" MsiKey="PatchWelcomeDlg#Next" Options="1"/>
+    <ROW Dialog_="PatchWelcomeDlg" Control="Bitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="234" Attributes="1048577" Text="[DialogBitmap]" Order="300" MsiKey="PatchWelcomeDlg#Bitmap"/>
+    <ROW Dialog_="PatchWelcomeDlg" Control="Back" Type="PushButton" X="168" Y="243" Width="56" Height="17" Attributes="1" Text="[ButtonText_Back]" Order="400" TextLocId="-" MsiKey="PatchWelcomeDlg#Back" Options="1"/>
+    <ROW Dialog_="PrepareDlg" Control="Bitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="234" Attributes="1048577" Text="[DialogBitmap]" Order="200" MsiKey="PrepareDlg#Bitmap"/>
+    <ROW Dialog_="PrepareDlg" Control="Next" Type="PushButton" X="230" Y="243" Width="68" Height="17" Attributes="1" Text="[ButtonText_Next]" Order="400" TextLocId="-" MsiKey="PrepareDlg#Next" Options="1"/>
+    <ROW Dialog_="PrepareDlg" Control="Back" Type="PushButton" X="168" Y="243" Width="56" Height="17" Attributes="1048577" Text="[ButtonText_Back]" Order="700" TextLocId="-" MsiKey="PrepareDlg#Back" Options="1"/>
+    <ROW Dialog_="ProgressDlg" Control="ProgressDlgDialogInitializer" Type="DialogInitializer" X="0" Y="0" Width="0" Height="0" Attributes="0" Order="-1" TextLocId="-" HelpLocId="-" ExtDataLocId="-"/>
+    <ROW Dialog_="ProgressDlg" Control="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" Attributes="1048577" Text="[BannerBitmap]" Order="200" MsiKey="ProgressDlg#BannerBitmap"/>
+    <ROW Dialog_="ProgressDlg" Control="BottomLine" Type="Line" X="4" Y="234" Width="365" Height="2" Attributes="1" Order="300" MsiKey="ProgressDlg#BottomLine"/>
+    <ROW Dialog_="ProgressDlg" Control="Logo" Type="Text" X="4" Y="228" Width="70" Height="12" Attributes="1" Text="TopPatch Installer" Order="400" TextLocId="Control.Text.ProgressDlg#Logo" MsiKey="ProgressDlg#Logo"/>
+    <ROW Dialog_="ProgressDlg" Control="Back" Type="PushButton" X="168" Y="243" Width="56" Height="17" Attributes="1" Text="[ButtonText_Back]" Order="500" TextLocId="-" MsiKey="ProgressDlg#Back" Options="1"/>
+    <ROW Dialog_="ProgressDlg" Control="Next" Type="PushButton" X="230" Y="243" Width="68" Height="17" Attributes="1" Text="[ButtonText_Next]" Order="600" TextLocId="-" MsiKey="ProgressDlg#Next" Options="1"/>
+    <ROW Dialog_="ProgressDlg" Control="ProgressBar" Type="ProgressBar" X="35" Y="115" Width="300" Height="23" Attributes="65541" Text="Progress done" Order="1200" TextLocId="Control.Text.ProgressDlg#ProgressBar" MsiKey="ProgressDlg#ProgressBar"/>
+    <ROW Dialog_="ResumeDlg" Control="Bitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="234" Attributes="1048577" Text="[DialogBitmap]" Order="300" MsiKey="ResumeDlg#Bitmap"/>
+    <ROW Dialog_="ResumeDlg" Control="Back" Type="PushButton" X="168" Y="243" Width="56" Height="17" Attributes="1" Text="[ButtonText_Back]" Order="400" TextLocId="-" MsiKey="ResumeDlg#Back" Options="1"/>
+    <ROW Dialog_="SettingsDlg" Control="SettingsDlgDialogInitializer" Type="DialogInitializer" X="0" Y="0" Width="0" Height="0" Attributes="0" Order="-1" TextLocId="-" HelpLocId="-" ExtDataLocId="-"/>
+    <ROW Dialog_="SettingsDlg" Control="Next" Type="PushButton" X="230" Y="243" Width="68" Height="17" Attributes="1" Text="Install Agent" Order="100" TextLocId="-" Options="1"/>
+    <ROW Dialog_="SettingsDlg" Control="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Cancel]" Order="200" TextLocId="-" Options="1"/>
+    <ROW Dialog_="SettingsDlg" Control="Back" Type="PushButton" X="168" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Back]" Order="300" TextLocId="-" Options="1"/>
+    <ROW Dialog_="SettingsDlg" Control="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" Attributes="1048577" Text="[BannerBitmap]" Order="400"/>
+    <ROW Dialog_="SettingsDlg" Control="BannerLine" Type="Line" X="0" Y="44" Width="372" Height="0" Attributes="1" Order="500"/>
+    <ROW Dialog_="SettingsDlg" Control="BottomLine" Type="Line" X="4" Y="234" Width="365" Height="2" Attributes="1" Order="600"/>
+    <ROW Dialog_="SettingsDlg" Control="Description" Type="Text" X="25" Y="21" Width="280" Height="23" Attributes="196611" Text="Settings used by the Agent to communicate with the RV Server. Please enter either the server&apos;s hostname or the IP Address." Order="700"/>
+    <ROW Dialog_="SettingsDlg" Control="Logo" Type="Text" X="4" Y="228" Width="70" Height="12" Attributes="1" Text="TopPatch Installer" Order="800"/>
+    <ROW Dialog_="SettingsDlg" Control="SettingsDlg" Type="Text" X="15" Y="6" Width="200" Height="15" Attributes="196611" Text="TopPatch Agent Settings" TextStyle="[DlgTitleFont]" Order="900"/>
+    <ROW Dialog_="SettingsDlg" Control="Text_1" Type="Text" X="15" Y="57" Width="165" Height="11" Attributes="65539" Property="TEXT_1_PROP" Text="TopPatch Server Hostname:" Order="1000"/>
+    <ROW Dialog_="SettingsDlg" Control="Edit_1" Type="Edit" X="15" Y="69" Width="160" Height="18" Attributes="3" Property="HOSTNAME" Text="{260}" Order="1100"/>
+    <ROW Dialog_="SettingsDlg" Control="Text_2" Type="Text" X="15" Y="95" Width="122" Height="11" Attributes="65539" Property="TEXT_2_PROP" Text="TopPatch Server IP Address:" Order="1200"/>
+    <ROW Dialog_="SettingsDlg" Control="Edit_2" Type="Edit" X="15" Y="107" Width="160" Height="18" Attributes="3" Property="IPADDRESS" Text="{260}" Order="1300"/>
+    <ROW Dialog_="SettingsDlg" Control="VLine_1" Type="VLine" X="192" Y="50" Width="2" Height="180" Attributes="1" Order="1400" ExtType="VLine"/>
+    <ROW Dialog_="SettingsDlg" Control="Text_5" Type="Text" X="210" Y="57" Width="122" Height="11" Attributes="65539" Property="TEXT_1_PROP_1" Text="Username:" Order="1500"/>
+    <ROW Dialog_="SettingsDlg" Control="Edit_4" Type="Edit" X="210" Y="69" Width="129" Height="18" Attributes="1" Property="USERNAME" Text="{260}" Order="1600"/>
+    <ROW Dialog_="SettingsDlg" Control="Text_6" Type="Text" X="210" Y="95" Width="122" Height="11" Attributes="65539" Property="TEXT_2_PROP_1" Text="Password:" Order="1700"/>
+    <ROW Dialog_="SettingsDlg" Control="Edit_5" Type="Edit" X="210" Y="107" Width="129" Height="18" Attributes="2097153" Property="PASSWORD" Text="{260}" Order="1800"/>
+    <ROW Dialog_="SettingsDlg" Control="Text_7" Type="Text" X="210" Y="154" Width="122" Height="11" Attributes="65539" Property="TEXT_2_PROP_1_1" Text="Customer Name:" Order="1900"/>
+    <ROW Dialog_="SettingsDlg" Control="Edit_3" Type="Edit" X="210" Y="166" Width="129" Height="18" Attributes="1" Property="CUSTOMER" Text="{260}" Order="2000"/>
+    <ROW Dialog_="SettingsDlg" Control="btnVerifyCredentials" Type="PushButton" X="210" Y="126" Width="129" Height="20" Attributes="1" Text="Verify Credentials" Order="2100"/>
+    <ROW Dialog_="SettingsDlg" Control="chkRebootPending" Type="CheckBox" X="205" Y="194" Width="164" Height="13" Attributes="1" Property="REBOOTPENDING_CHECKBOX" Text="No reboot is pending." TextStyle="DlgFontBold8" Order="2200"/>
+    <ROW Dialog_="SettingsDlg" Control="chkWsusEnable" Type="CheckBox" X="205" Y="206" Width="140" Height="20" Attributes="1" Property="WSUS_CHECKBOX" Text="WSUS is disabled." TextStyle="DlgFontBold8" Order="2300"/>
+    <ROW Dialog_="SettingsDlg" Control="GroupBox_1" Type="GroupBox" X="23" Y="132" Width="143" Height="83" Attributes="1" Text="Proxy server" Order="2400"/>
+    <ROW Dialog_="SettingsDlg" Control="Text_3" Type="Text" X="40" Y="146" Width="42" Height="11" Attributes="65539" Property="TEXT_1_PROP_1_1" Text="Address:" Order="2500"/>
+    <ROW Dialog_="SettingsDlg" Control="Edit_6" Type="Edit" X="39" Y="157" Width="110" Height="18" Attributes="3" Property="PROXYADDRESS" Text="{260}" Order="2600"/>
+    <ROW Dialog_="SettingsDlg" Control="Text_4" Type="Text" X="40" Y="178" Width="49" Height="11" Attributes="65539" Property="TEXT_2_PROP_1_2" Text="Port:" Order="2700"/>
+    <ROW Dialog_="SettingsDlg" Control="Edit_7" Type="Edit" X="39" Y="188" Width="61" Height="18" Attributes="3" Property="PROXYPORT" Text="{260}" Order="2800"/>
+    <ROW Dialog_="UserExit" Control="Bitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="234" Attributes="1048577" Text="[DialogBitmap]" Order="300" MsiKey="UserExit#Bitmap"/>
+    <ROW Dialog_="UserExit" Control="Back" Type="PushButton" X="168" Y="243" Width="56" Height="17" Attributes="1" Text="[ButtonText_Back]" Order="400" TextLocId="-" MsiKey="UserExit#Back" Options="1"/>
+    <ROW Dialog_="VerifyReadyDlg" Control="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" Attributes="1048577" Text="[BannerBitmap]" Order="300" MsiKey="VerifyReadyDlg#BannerBitmap"/>
+    <ROW Dialog_="VerifyReadyDlg" Control="BottomLine" Type="Line" X="4" Y="234" Width="365" Height="2" Attributes="1" Order="400" MsiKey="VerifyReadyDlg#BottomLine"/>
+    <ROW Dialog_="VerifyReadyDlg" Control="Logo" Type="Text" X="4" Y="228" Width="70" Height="12" Attributes="1" Text="TopPatch Installer" Order="500" TextLocId="Control.Text.VerifyReadyDlg#Logo" MsiKey="VerifyReadyDlg#Logo"/>
+    <ROW Dialog_="VerifyReadyDlg" Control="Back" Type="PushButton" X="168" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Back]" Order="600" TextLocId="-" MsiKey="VerifyReadyDlg#Back" Options="1"/>
+    <ROW Dialog_="VerifyRemoveDlg" Control="Back" Type="PushButton" X="168" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Back]" Order="100" TextLocId="-" MsiKey="VerifyRemoveDlg#Back" Options="1"/>
+    <ROW Dialog_="VerifyRemoveDlg" Control="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" Attributes="1048577" Text="[BannerBitmap]" Order="400" MsiKey="VerifyRemoveDlg#BannerBitmap"/>
+    <ROW Dialog_="VerifyRemoveDlg" Control="BottomLine" Type="Line" X="4" Y="234" Width="365" Height="2" Attributes="1" Order="500" MsiKey="VerifyRemoveDlg#BottomLine"/>
+    <ROW Dialog_="VerifyRemoveDlg" Control="Title" Type="Text" X="14" Y="5" Width="200" Height="15" Attributes="196611" Text="Remove [ProductName]" TextStyle="DlgFontBold8" Order="700" TextLocId="Control.Text.VerifyRemoveDlg#Title" MsiKey="VerifyRemoveDlg#Title"/>
+    <ROW Dialog_="VerifyRemoveDlg" Control="Description" Type="Text" X="25" Y="21" Width="280" Height="23" Attributes="196611" Text="You have chosen to remove the program from your computer." Order="900" TextLocId="Control.Text.VerifyRemoveDlg#Description" MsiKey="VerifyRemoveDlg#Description"/>
+    <ROW Dialog_="VerifyRepairDlg" Control="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" Attributes="1048577" Text="[BannerBitmap]" Order="300" MsiKey="VerifyRepairDlg#BannerBitmap"/>
+    <ROW Dialog_="VerifyRepairDlg" Control="BottomLine" Type="Line" X="4" Y="234" Width="365" Height="2" Attributes="1" Order="400" MsiKey="VerifyRepairDlg#BottomLine"/>
+    <ROW Dialog_="VerifyRepairDlg" Control="Back" Type="PushButton" X="168" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Back]" Order="600" TextLocId="-" MsiKey="VerifyRepairDlg#Back" Options="1"/>
+    <ROW Dialog_="VerifyRepairDlg" Control="Title" Type="Text" X="14" Y="5" Width="200" Height="15" Attributes="196611" Text="Repair [ProductName]" TextStyle="DlgFontBold8" Order="700" TextLocId="Control.Text.VerifyRepairDlg#Title" MsiKey="VerifyRepairDlg#Title"/>
+    <ROW Dialog_="VerifyRepairDlg" Control="Description" Type="Text" X="25" Y="21" Width="280" Height="23" Attributes="196611" Text="The [Wizard] is ready to begin the repair of [ProductName]." Order="900" TextLocId="Control.Text.VerifyRepairDlg#Description" MsiKey="VerifyRepairDlg#Description"/>
+    <ROW Dialog_="WelcomeDlg" Control="Next" Type="PushButton" X="230" Y="243" Width="68" Height="17" Attributes="3" Text="[ButtonText_Next]" Order="100" TextLocId="-" MsiKey="WelcomeDlg#Next" Options="1"/>
+    <ROW Dialog_="WelcomeDlg" Control="Bitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="234" Attributes="1048577" Text="[DialogBitmap]" Order="300" MsiKey="WelcomeDlg#Bitmap"/>
+    <ROW Dialog_="WelcomeDlg" Control="Back" Type="PushButton" X="168" Y="243" Width="56" Height="17" Attributes="1" Text="[ButtonText_Back]" Order="400" TextLocId="-" MsiKey="WelcomeDlg#Back" Options="1"/>
+    <ROW Dialog_="WelcomeDlg" Control="Text_1" Type="Text" X="135" Y="146" Width="212" Height="11" Attributes="65539" Property="TXTUPDATE" Text="[TXTUPDATE]" Order="800"/>
+    <ATTRIBUTE name="DeletedRows" value="MaintenanceTypeDlg#ChangeLabel@MaintenanceTypeDlg#ChangeText@ExitDialog#LaunchProdText@ExitDialog#ViewReadmeText"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiControlConditionComponent">
+    <ROW Dialog_="SettingsDlg" Control_="Edit_4" Action="Enable" Condition="HOSTNAME OR IPADDRESS"/>
+    <ROW Dialog_="SettingsDlg" Control_="Edit_5" Action="Enable" Condition="HOSTNAME OR IPADDRESS"/>
+    <ROW Dialog_="SettingsDlg" Control_="Next" Action="Enable" Condition="(HOSTNAME OR IPADDRESS) AND USERNAME AND PASSWORD AND CUSTOMER"/>
+    <ROW Dialog_="SettingsDlg" Control_="Edit_4" Action="Disable" Condition="HOSTNAME=&quot;&quot; AND IPADDRESS=&quot;&quot;"/>
+    <ROW Dialog_="SettingsDlg" Control_="Edit_5" Action="Disable" Condition="HOSTNAME=&quot;&quot; AND IPADDRESS=&quot;&quot;"/>
+    <ROW Dialog_="SettingsDlg" Control_="Edit_3" Action="Disable" Condition="(HOSTNAME=&quot;&quot; AND IPADDRESS=&quot;&quot;) OR USERNAME=&quot;&quot; OR PASSWORD=&quot;&quot;"/>
+    <ROW Dialog_="SettingsDlg" Control_="Edit_3" Action="Enable" Condition="(HOSTNAME OR IPADDRESS) AND USERNAME AND PASSWORD"/>
+    <ROW Dialog_="SettingsDlg" Control_="Next" Action="Disable" Condition="(HOSTNAME=&quot;&quot; AND IPADDRESS=&quot;&quot;) OR USERNAME=&quot;&quot; OR PASSWORD=&quot;&quot; OR CUSTOMER=&quot;&quot;"/>
+    <ROW Dialog_="SettingsDlg" Control_="btnVerifyCredentials" Action="Disable" Condition="(HOSTNAME=&quot;&quot; AND IPADDRESS=&quot;&quot;) OR USERNAME=&quot;&quot; OR PASSWORD=&quot;&quot;"/>
+    <ROW Dialog_="SettingsDlg" Control_="btnVerifyCredentials" Action="Enable" Condition="(HOSTNAME OR IPADDRESS) AND USERNAME AND PASSWORD"/>
+    <ATTRIBUTE name="DeletedRows" value="ExitDialog#LaunchProdText#Hide#((NOT AI_INSTALL) AND (NOT AI_PATCH)) OR ((CTRLS &lt;&gt; 2) AND (CTRLS &lt;&gt; 3))@ExitDialog#ViewReadmeText#Hide#((NOT AI_INSTALL) AND (NOT AI_PATCH)) OR ((CTRLS &lt;&gt; 1) AND (CTRLS &lt;&gt; 3))"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiControlEventComponent">
+    <ROW Dialog_="WelcomeDlg" Control_="Next" Event="NewDialog" Argument="SettingsDlg" Condition="AI_INSTALL" Ordering="1"/>
+    <ROW Dialog_="MaintenanceWelcomeDlg" Control_="Next" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT" Ordering="99"/>
+    <ROW Dialog_="CustomizeDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_MAINT" Ordering="101"/>
+    <ROW Dialog_="CustomizeDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT" Ordering="1"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_MAINT" Ordering="198"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="CustomizeDlg" Condition="AI_MAINT" Ordering="203"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control_="ChangeButton" Event="NewDialog" Argument="CustomizeDlg" Condition="AI_MAINT" Ordering="501"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceWelcomeDlg" Condition="AI_MAINT" Ordering="1"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control_="RemoveButton" Event="NewDialog" Argument="VerifyRemoveDlg" Condition="AI_MAINT AND InstallMode=&quot;Remove&quot;" Ordering="601"/>
+    <ROW Dialog_="VerifyRemoveDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT AND InstallMode=&quot;Remove&quot;" Ordering="1"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control_="RepairButton" Event="NewDialog" Argument="VerifyRepairDlg" Condition="AI_MAINT AND InstallMode=&quot;Repair&quot;" Ordering="601"/>
+    <ROW Dialog_="VerifyRepairDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT AND InstallMode=&quot;Repair&quot;" Ordering="1"/>
+    <ROW Dialog_="VerifyRepairDlg" Control_="Repair" Event="EndDialog" Argument="Return" Condition="AI_MAINT AND InstallMode=&quot;Repair&quot;" Ordering="399" Options="1"/>
+    <ROW Dialog_="VerifyRemoveDlg" Control_="Remove" Event="EndDialog" Argument="Return" Condition="AI_MAINT AND InstallMode=&quot;Remove&quot;" Ordering="299" Options="1"/>
+    <ROW Dialog_="PatchWelcomeDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_PATCH" Ordering="201"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_PATCH" Ordering="199"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="PatchWelcomeDlg" Condition="AI_PATCH" Ordering="204"/>
+    <ROW Dialog_="ResumeDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_RESUME" Ordering="299"/>
+    <ROW Dialog_="SettingsDlg" Control_="Cancel" Event="SpawnDialog" Argument="CancelDlg" Condition="1" Ordering="100"/>
+    <ROW Dialog_="SettingsDlg" Control_="Next" Event="EndDialog" Argument="Return" Condition="AI_INSTALL" Ordering="1"/>
+    <ROW Dialog_="SettingsDlg" Control_="Back" Event="NewDialog" Argument="WelcomeDlg" Condition="AI_INSTALL" Ordering="1"/>
+    <ROW Dialog_="SettingsDlg" Control_="SettingsDlgDialogInitializer" Event="DoAction" Argument="ObtainProxySettings" Condition="AI_INSTALL" Ordering="0"/>
+    <ROW Dialog_="NewDialog" Control_="Cancel" Event="SpawnDialog" Argument="CancelDlg" Condition="1" Ordering="100"/>
+    <ROW Dialog_="NewDialog_1" Control_="Cancel" Event="SpawnDialog" Argument="CancelDlg" Condition="1" Ordering="100"/>
+    <ROW Dialog_="SettingsDlg" Control_="btnVerifyCredentials" Event="DoAction" Argument="VerifyCredentials" Condition="AI_INSTALL" Ordering="0"/>
+    <ROW Dialog_="ExitDialog" Control_="Finish" Event="DoAction" Argument="AI_CleanPrereq" Condition="1" Ordering="301"/>
+    <ROW Dialog_="FatalError" Control_="Finish" Event="DoAction" Argument="AI_CleanPrereq" Condition="1" Ordering="102"/>
+    <ROW Dialog_="UserExit" Control_="Finish" Event="DoAction" Argument="AI_CleanPrereq" Condition="1" Ordering="101"/>
+    <ROW Dialog_="ProgressDlg" Control_="ProgressDlgDialogInitializer" Event="AddLocal" Argument="CC0311D065A748FABE35E813F6344757" Condition="AI_INSTALL" Ordering="0"/>
+    <ROW Dialog_="ProgressDlg" Control_="ProgressDlgDialogInitializer" Event="AddLocal" Argument="F46432430634C75A5FF967A6F846A90" Condition="AI_INSTALL" Ordering="1"/>
+    <ROW Dialog_="ProgressDlg" Control_="ProgressDlgDialogInitializer" Event="AddLocal" Argument="F07523DA3846FF9467B08163CD2CFA" Condition="AI_INSTALL" Ordering="2"/>
+    <ROW Dialog_="NewSeqDialog" Control_="Cancel" Event="SpawnDialog" Argument="CancelDlg" Condition="1" Ordering="100"/>
+    <ROW Dialog_="ChecklistDlg" Control_="Cancel" Event="SpawnDialog" Argument="CancelDlg" Condition="1" Ordering="100"/>
+    <ROW Dialog_="ChecklistDlg" Control_="TemplateDlgDialogInitializer" Event="DoAction" Argument="VerifyPendingReboot" Condition="AI_INSTALL" Ordering="0"/>
+    <ROW Dialog_="ChecklistDlg" Control_="TemplateDlgDialogInitializer" Event="DoAction" Argument="VerifyWSUS" Condition="AI_INSTALL" Ordering="1"/>
+    <ROW Dialog_="SettingsDlg" Control_="SettingsDlgDialogInitializer" Event="DoAction" Argument="VerifyPendingReboot" Condition="AI_INSTALL" Ordering="1"/>
+    <ROW Dialog_="SettingsDlg" Control_="SettingsDlgDialogInitializer" Event="DoAction" Argument="VerifyWSUS" Condition="AI_INSTALL" Ordering="2"/>
+    <ROW Dialog_="SettingsDlg" Control_="Next" Event="SpawnDialog" Argument="OutOfRbDiskDlg" Condition="AI_INSTALL AND OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND (PROMPTROLLBACKCOST=&quot;P&quot; OR NOT PROMPTROLLBACKCOST)" Ordering="2" Options="2"/>
+    <ROW Dialog_="SettingsDlg" Control_="Next" Event="EnableRollback" Argument="False" Condition="AI_INSTALL AND OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND PROMPTROLLBACKCOST=&quot;D&quot;" Ordering="3" Options="2"/>
+    <ROW Dialog_="SettingsDlg" Control_="Next" Event="SpawnDialog" Argument="OutOfDiskDlg" Condition="AI_INSTALL AND ( (OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 1) OR (OutOfDiskSpace = 1 AND PROMPTROLLBACKCOST=&quot;F&quot;) )" Ordering="4" Options="2"/>
+    <ROW Dialog_="SettingsDlg" Control_="SettingsDlgDialogInitializer" Event="[AI_ButtonText_Next_Orig]" Argument="[ButtonText_Next]" Condition="AI_INSTALL" Ordering="3" Options="2"/>
+    <ROW Dialog_="SettingsDlg" Control_="SettingsDlgDialogInitializer" Event="[ButtonText_Next]" Argument="[[AI_CommitButton]]" Condition="AI_INSTALL" Ordering="4" Options="2"/>
+    <ROW Dialog_="SettingsDlg" Control_="SettingsDlgDialogInitializer" Event="[AI_Text_Next_Orig]" Argument="[Text_Next]" Condition="AI_INSTALL" Ordering="5" Options="2"/>
+    <ROW Dialog_="SettingsDlg" Control_="SettingsDlgDialogInitializer" Event="[Text_Next]" Argument="[Text_Install]" Condition="AI_INSTALL" Ordering="6" Options="2"/>
+    <ROW Dialog_="SettingsDlg" Control_="Back" Event="[ButtonText_Next]" Argument="[AI_ButtonText_Next_Orig]" Condition="AI_INSTALL" Ordering="2" Options="2"/>
+    <ROW Dialog_="SettingsDlg" Control_="Back" Event="[Text_Next]" Argument="[AI_Text_Next_Orig]" Condition="AI_INSTALL" Ordering="3" Options="2"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiCreateFolderComponent">
+    <ROW Directory_="logs_Dir" Component_="logs"/>
+    <ROW Directory_="operations_Dir" Component_="operations"/>
+    <ROW Directory_="NewFolder_Dir" Component_="NewFolder"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiCustActComponent">
+    <ROW Action="AI_AiRemoveFilesCommit" Type="11777" Source="ResourceCleaner.dll" Target="OnAiRemoveFilesCommit" WithoutSeq="true"/>
+    <ROW Action="AI_AiRemoveFilesDeferred_Permanent" Type="11265" Source="ResourceCleaner.dll" Target="OnAiRemoveFilesPermanent" WithoutSeq="true"/>
+    <ROW Action="AI_AiRemoveFilesDeferred_Undoable" Type="11265" Source="ResourceCleaner.dll" Target="OnAiRemoveFilesUndoable" WithoutSeq="true"/>
+    <ROW Action="AI_AiRemoveFilesImmediate" Type="1" Source="ResourceCleaner.dll" Target="OnAiRemoveFilesImmediate"/>
+    <ROW Action="AI_AiRemoveFilesRollback" Type="11521" Source="ResourceCleaner.dll" Target="OnAiUndoRemoveFiles"/>
+    <ROW Action="AI_AppSearchEx" Type="1" Source="Prereq.dll" Target="DoAppSearchEx"/>
+    <ROW Action="AI_BACKUP_AI_SETUPEXEPATH" Type="51" Source="AI_SETUPEXEPATH_ORIGINAL" Target="[AI_SETUPEXEPATH]"/>
+    <ROW Action="AI_CleanPrereq" Type="65" Source="Prereq.dll" Target="CleanPrereq" WithoutSeq="true"/>
+    <ROW Action="AI_ConfigureChainer" Type="1" Source="Prereq.dll" Target="ConfigurePrereqLauncher"/>
+    <ROW Action="AI_DATA_SETTER" Type="51" Source="AI_ExtractFiles" Target="[AI_SETUPEXEPATH]"/>
+    <ROW Action="AI_DOWNGRADE" Type="19" Target="4010"/>
+    <ROW Action="AI_DeleteCadLzma" Type="51" Source="AI_DeleteLzma" Target="[AI_SETUPEXEPATH]"/>
+    <ROW Action="AI_DeleteLzma" Type="1025" Source="lzmaextractor.dll" Target="DeleteLZMAFiles"/>
+    <ROW Action="AI_DeleteRCadLzma" Type="51" Source="AI_DeleteRLzma" Target="[AI_SETUPEXEPATH]"/>
+    <ROW Action="AI_DeleteRLzma" Type="1281" Source="lzmaextractor.dll" Target="DeleteLZMAFiles"/>
+    <ROW Action="AI_DownloadPrereq" Type="1" Source="Prereq.dll" Target="DownloadPrereq"/>
+    <ROW Action="AI_DpiContentScale" Type="1" Source="aicustact.dll" Target="DpiContentScale"/>
+    <ROW Action="AI_EstimateExtractFiles" Type="1" Source="Prereq.dll" Target="EstimateExtractFiles"/>
+    <ROW Action="AI_ExtractCadLzma" Type="51" Source="AI_ExtractLzma" Target="[AI_SETUPEXEPATH]"/>
+    <ROW Action="AI_ExtractFiles" Type="1025" Source="Prereq.dll" Target="ExtractSourceFiles" AdditionalSeq="AI_DATA_SETTER"/>
+    <ROW Action="AI_ExtractLzma" Type="1025" Source="lzmaextractor.dll" Target="ExtractLZMAFiles"/>
+    <ROW Action="AI_ExtractPrereq" Type="65" Source="Prereq.dll" Target="ExtractPrereq"/>
+    <ROW Action="AI_FindExeLzma" Type="1" Source="lzmaextractor.dll" Target="FindEXE"/>
+    <ROW Action="AI_FwConfig" Type="11265" Source="NetFirewall.dll" Target="OnFwConfig" WithoutSeq="true"/>
+    <ROW Action="AI_FwInstall" Type="1" Source="NetFirewall.dll" Target="OnFwInstall"/>
+    <ROW Action="AI_FwRemove" Type="11265" Source="NetFirewall.dll" Target="OnFwRemove" WithoutSeq="true"/>
+    <ROW Action="AI_FwRollback" Type="11521" Source="NetFirewall.dll" Target="OnFwRollback" WithoutSeq="true"/>
+    <ROW Action="AI_FwUninstall" Type="1" Source="NetFirewall.dll" Target="OnFwUninstall"/>
+    <ROW Action="AI_InstallModeCheck" Type="1" Source="aicustact.dll" Target="UpdateInstallMode" WithoutSeq="true"/>
+    <ROW Action="AI_InstallPostPrerequisite" Type="1" Source="Prereq.dll" Target="InstallPostPrereq"/>
+    <ROW Action="AI_InstallPrerequisite" Type="65" Source="Prereq.dll" Target="InstallPrereq"/>
+    <ROW Action="AI_LaunchChainer" Type="3314" Source="AI_PREREQ_CHAINER"/>
+    <ROW Action="AI_PREPARE_UPGRADE" Type="65" Source="aicustact.dll" Target="PrepareUpgrade"/>
+    <ROW Action="AI_RESTORE_AI_SETUPEXEPATH" Type="51" Source="AI_SETUPEXEPATH" Target="[AI_SETUPEXEPATH_ORIGINAL]"/>
+    <ROW Action="AI_RESTORE_LOCATION" Type="65" Source="aicustact.dll" Target="RestoreLocation"/>
+    <ROW Action="AI_ResolveKnownFolders" Type="1" Source="aicustact.dll" Target="AI_ResolveKnownFolders"/>
+    <ROW Action="AI_ResolveLocalizedCredentials" Type="1" Source="aicustact.dll" Target="GetLocalizedCredentials"/>
+    <ROW Action="AI_SETPROGRAMFILES" Type="51" Source="AI_ProgramFiles" Target="[ProgramFilesFolder]"/>
+    <ROW Action="AI_SETPROGRAMFILES64" Type="51" Source="AI_ProgramFiles" Target="[ProgramFiles64Folder]"/>
+    <ROW Action="AI_SHOW_LOG" Type="65" Source="aicustact.dll" Target="LaunchLogFile" WithoutSeq="true"/>
+    <ROW Action="AI_STORE_LOCATION" Type="51" Source="ARPINSTALLLOCATION" Target="[APPDIR]"/>
+    <ROW Action="AI_VerifyPrereq" Type="1" Source="Prereq.dll" Target="VerifyPrereq"/>
+    <ROW Action="AI_WinOptFeaturesCheckReboot" Type="1" Source="WinOptionalFeatures.dll" Target="OnWinOptFeaturesCheckReboot"/>
+    <ROW Action="AI_WinOptFeaturesConfig" Type="11265" Source="WinOptionalFeatures.dll" Target="OnWinOptFeaturesConfig" WithoutSeq="true"/>
+    <ROW Action="AI_WinOptFeaturesInstall" Type="1" Source="WinOptionalFeatures.dll" Target="OnWinOptFeaturesInstall"/>
+    <ROW Action="AI_WinOptFeaturesRemove" Type="11265" Source="WinOptionalFeatures.dll" Target="OnWinOptFeaturesRemove" WithoutSeq="true"/>
+    <ROW Action="AI_WinOptFeaturesRollback" Type="11521" Source="WinOptionalFeatures.dll" Target="OnWinOptFeaturesRollback" WithoutSeq="true"/>
+    <ROW Action="AI_WinOptFeaturesUninstall" Type="1" Source="WinOptionalFeatures.dll" Target="OnWinOptFeaturesUninstall"/>
+    <ROW Action="ObtainProxySettings" Type="65" Source="CustomAction.CA.dll_1" Target="ObtainProxySettings" WithoutSeq="true"/>
+    <ROW Action="PrepareAgent" Type="1" Source="CustomAction.CA.dll_1" Target="PrepareAgent"/>
+    <ROW Action="SET_APPDIR" Type="307" Source="APPDIR" Target="[ProgramFilesFolder][Manufacturer]\[ProductName]" MultiBuildTarget="DefaultBuild:[AI_ProgramFiles][Manufacturer]\[ProductName]"/>
+    <ROW Action="SET_SHORTCUTDIR" Type="307" Source="SHORTCUTDIR" Target="[ProgramMenuFolder][ProductName]"/>
+    <ROW Action="SET_TARGETDIR_TO_APPDIR" Type="51" Source="TARGETDIR" Target="[APPDIR]"/>
+    <ROW Action="VerifyCredentials" Type="65" Source="CustomAction.CA.dll_1" Target="VerifyCredentials" WithoutSeq="true"/>
+    <ROW Action="VerifyPendingReboot" Type="65" Source="CustomAction.CA.dll_1" Target="VerifyPendingReboot" WithoutSeq="true"/>
+    <ROW Action="VerifyWSUS" Type="65" Source="CustomAction.CA.dll_1" Target="VerifyWSUS" WithoutSeq="true"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiDialogComponent">
+    <ROW Dialog="ChecklistDlg" HCentering="50" VCentering="50" Width="370" Height="270" Attributes="3" Title="[ProductName] [Setup]" Control_Default="Next" Control_Cancel="Cancel"/>
+    <ROW Dialog="NewDialog" HCentering="50" VCentering="50" Width="370" Height="270" Attributes="3" Title="[ProductName] [Setup]" Control_Default="Next" Control_Cancel="Cancel"/>
+    <ROW Dialog="NewDialog_1" HCentering="50" VCentering="50" Width="370" Height="270" Attributes="3" Title="[ProductName] [Setup]" Control_Default="Next" Control_Cancel="Cancel"/>
+    <ROW Dialog="NewSeqDialog" HCentering="50" VCentering="50" Width="370" Height="270" Attributes="3" Title="[ProductName] [Setup]" Control_Default="Next" Control_Cancel="Cancel"/>
+    <ROW Dialog="ProgressDlg" HCentering="50" VCentering="50" Width="370" Height="270" Attributes="0" Title="[ProductName] [Setup]" Control_Default="Cancel" Control_Cancel="Cancel" TitleLocId="Dialog.ProgressDlg" MsiKey="ProgressDlg"/>
+    <ROW Dialog="SettingsDlg" HCentering="50" VCentering="50" Width="370" Height="270" Attributes="3" Title="[ProductName] [Setup]" Control_Default="Next" Control_Cancel="Cancel"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
+    <ROW Name="TopPatchIcon.exe" SourcePath="TopPatchIcon.ico" Index="0"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiInstExSeqComponent">
+    <ROW Action="AI_DOWNGRADE" Condition="AI_NEWERPRODUCTFOUND AND (UILevel &lt;&gt; 5)" Sequence="210"/>
+    <ROW Action="AI_RESTORE_LOCATION" Condition="APPDIR=&quot;&quot;" Sequence="745"/>
+    <ROW Action="AI_STORE_LOCATION" Condition="(Not Installed) OR REINSTALL" Sequence="1502"/>
+    <ROW Action="AI_PREPARE_UPGRADE" Condition="AI_UPGRADE=&quot;No&quot; AND (Not Installed)" Sequence="1399"/>
+    <ROW Action="AI_ResolveKnownFolders" Sequence="52"/>
+    <ROW Action="AI_ResolveLocalizedCredentials" Sequence="51"/>
+    <ROW Action="AI_AppSearchEx" Sequence="102"/>
+    <ROW Action="AI_FwInstall" Condition="(VersionNT &gt;= 501) AND (REMOVE &lt;&gt; &quot;ALL&quot;)" Sequence="5849"/>
+    <ROW Action="AI_FwUninstall" Condition="(VersionNT &gt;= 501) AND (REMOVE=&quot;ALL&quot;)" Sequence="1697"/>
+    <ROW Action="InstallFinalize" Sequence="6576" SeqType="0" MsiKey="InstallFinalize"/>
+    <ROW Action="AI_WinOptFeaturesInstall" Condition="(VersionNT &gt;= 600) AND (REMOVE &lt;&gt; &quot;ALL&quot;)" Sequence="1501"/>
+    <ROW Action="AI_WinOptFeaturesUninstall" Condition="(VersionNT &gt;= 600) AND (REMOVE=&quot;ALL&quot;)" Sequence="1699"/>
+    <ROW Action="AI_WinOptFeaturesCheckReboot" Condition="(VersionNT &gt;= 600)" Sequence="6501"/>
+    <ROW Action="PrepareAgent" Condition="( NOT Installed )" Sequence="6577"/>
+    <ROW Action="AI_VerifyPrereq" Sequence="1101"/>
+    <ROW Action="AI_ConfigureChainer" Condition="((UILevel = 2) OR (UILevel = 3)) AND (NOT UPGRADINGPRODUCTCODE)" Sequence="6572"/>
+    <ROW Action="AI_LaunchChainer" Condition="AI_PREREQ_CHAINER AND (NOT UPGRADINGPRODUCTCODE)" Sequence="6573"/>
+    <ROW Action="AI_AiRemoveFilesRollback" Sequence="3099"/>
+    <ROW Action="AI_BACKUP_AI_SETUPEXEPATH" Sequence="99" Builds="DefaultBuild"/>
+    <ROW Action="AI_RESTORE_AI_SETUPEXEPATH" Condition="AI_SETUPEXEPATH_ORIGINAL" Sequence="101" Builds="DefaultBuild"/>
+    <ROW Action="AI_DeleteCadLzma" Condition="SETUPEXEDIR=&quot;&quot; AND Installed AND (REMOVE&lt;&gt;&quot;ALL&quot;) AND (AI_INSTALL_MODE&lt;&gt;&quot;Remove&quot;) AND (NOT PATCH)" Sequence="199" Builds="DefaultBuild"/>
+    <ROW Action="AI_DeleteRCadLzma" Condition="SETUPEXEDIR=&quot;&quot; AND Installed AND (REMOVE&lt;&gt;&quot;ALL&quot;) AND (AI_INSTALL_MODE&lt;&gt;&quot;Remove&quot;) AND (NOT PATCH)" Sequence="198" Builds="DefaultBuild"/>
+    <ROW Action="AI_ExtractCadLzma" Condition="SETUPEXEDIR=&quot;&quot; AND Installed AND (REMOVE&lt;&gt;&quot;ALL&quot;) AND (AI_INSTALL_MODE&lt;&gt;&quot;Remove&quot;) AND (NOT PATCH)" Sequence="197" Builds="DefaultBuild"/>
+    <ROW Action="AI_FindExeLzma" Condition="SETUPEXEDIR=&quot;&quot; AND Installed AND (REMOVE&lt;&gt;&quot;ALL&quot;) AND (AI_INSTALL_MODE&lt;&gt;&quot;Remove&quot;) AND (NOT PATCH)" Sequence="196" Builds="DefaultBuild"/>
+    <ROW Action="AI_ExtractLzma" Condition="SETUPEXEDIR=&quot;&quot; AND Installed AND (REMOVE&lt;&gt;&quot;ALL&quot;) AND (AI_INSTALL_MODE&lt;&gt;&quot;Remove&quot;) AND (NOT PATCH)" Sequence="1549" Builds="DefaultBuild"/>
+    <ROW Action="AI_DeleteRLzma" Condition="SETUPEXEDIR=&quot;&quot; AND Installed AND (REMOVE&lt;&gt;&quot;ALL&quot;) AND (AI_INSTALL_MODE&lt;&gt;&quot;Remove&quot;) AND (NOT PATCH)" Sequence="1548" Builds="DefaultBuild"/>
+    <ROW Action="AI_DeleteLzma" Condition="SETUPEXEDIR=&quot;&quot; AND Installed AND (REMOVE&lt;&gt;&quot;ALL&quot;) AND (AI_INSTALL_MODE&lt;&gt;&quot;Remove&quot;) AND (NOT PATCH)" Sequence="6575" Builds="DefaultBuild"/>
+    <ROW Action="AI_ExtractFiles" Sequence="3998" Builds="DefaultBuild"/>
+    <ROW Action="AI_DATA_SETTER" Sequence="3997"/>
+    <ROW Action="AI_EstimateExtractFiles" Sequence="3999" Builds="DefaultBuild"/>
+    <ROW Action="AI_SETPROGRAMFILES64" Condition="VersionNT64" Sequence="746"/>
+    <ROW Action="AI_SETPROGRAMFILES" Condition="NOT VersionNT64" Sequence="747"/>
+    <ROW Action="AI_AiRemoveFilesImmediate" Sequence="3499"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiInstallUISequenceComponent">
+    <ROW Action="AI_RESTORE_LOCATION" Condition="APPDIR=&quot;&quot;" Sequence="745"/>
+    <ROW Action="AI_ResolveKnownFolders" Sequence="53"/>
+    <ROW Action="AI_ResolveLocalizedCredentials" Sequence="52"/>
+    <ROW Action="AI_BACKUP_AI_SETUPEXEPATH" Sequence="99"/>
+    <ROW Action="AI_RESTORE_AI_SETUPEXEPATH" Condition="AI_SETUPEXEPATH_ORIGINAL" Sequence="102"/>
+    <ROW Action="AI_AppSearchEx" Sequence="101"/>
+    <ROW Action="ExecuteAction" Sequence="1289" SeqType="0" MsiKey="ExecuteAction"/>
+    <ROW Action="AI_DpiContentScale" Sequence="51"/>
+    <ROW Action="AI_DownloadPrereq" Sequence="1286"/>
+    <ROW Action="AI_ExtractPrereq" Sequence="1287"/>
+    <ROW Action="AI_InstallPrerequisite" Sequence="1288"/>
+    <ROW Action="AI_InstallPostPrerequisite" Sequence="1290"/>
+    <ROW Action="AI_SETPROGRAMFILES64" Condition="VersionNT64" Sequence="746"/>
+    <ROW Action="AI_SETPROGRAMFILES" Condition="NOT VersionNT64" Sequence="747"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiLaunchConditionsComponent">
+    <ROW Condition="( Version9X OR VersionNT64 OR ( VersionNT AND ((VersionNT &lt;&gt; 500) OR ((VersionNT = 500) AND (ServicePackLevel &gt;= 1))) AND ((VersionNT &lt;&gt; 500) OR ((VersionNT = 500) AND (ServicePackLevel &lt;&gt; 1))) AND ((VersionNT &lt;&gt; 500) OR ((VersionNT = 500) AND (ServicePackLevel &lt;&gt; 2))) AND ((VersionNT &lt;&gt; 500) OR ((VersionNT = 500) AND (ServicePackLevel &lt;&gt; 3))) AND ((VersionNT &lt;&gt; 500) OR ((VersionNT = 500) AND (ServicePackLevel &lt;&gt; 4))) ) )" Description="[ProductName] cannot be installed on the following Windows versions: [WindowsTypeNTDisplay]" DescriptionLocId="AI.LaunchCondition.NoSpecificNT" IsPredefined="true" Builds="DefaultBuild"/>
+    <ROW Condition="(VersionNT &lt;&gt; 400)" Description="[ProductName] cannot be installed on the following Windows versions: [WindowsTypeNT40Display]" DescriptionLocId="AI.LaunchCondition.NoNT40" IsPredefined="true" Builds="DefaultBuild"/>
+    <ROW Condition="VersionNT" Description="[ProductName] cannot be installed on [WindowsType9XDisplay]" DescriptionLocId="AI.LaunchCondition.No9X" IsPredefined="true" Builds="DefaultBuild"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiRegLocatorComponent">
+    <ROW Signature_="AI_EXE_PATH_CU" Root="1" Key="Software\Caphyon\Advanced Installer\LZMA\[ProductCode]\[ProductVersion]" Name="AI_ExePath" Type="2"/>
+    <ROW Signature_="AI_EXE_PATH_LM" Root="2" Key="Software\Caphyon\Advanced Installer\LZMA\[ProductCode]\[ProductVersion]" Name="AI_ExePath" Type="2"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiRegsComponent">
+    <ROW Registry="AI_ExePath" Root="-1" Key="Software\Caphyon\Advanced Installer\LZMA\[ProductCode]\[ProductVersion]" Name="AI_ExePath" Value="[AI_SETUPEXEPATH]" Component_="AI_ExePath"/>
+    <ROW Registry="CC0311D065A748FABE35E813F6344757" Root="-1" Key="Software\Caphyon\Advanced Installer\Prereqs\[ProductCode]\[ProductVersion]" Name="CC0311D065A748FABE35E813F6344757" Value="1" Component_="CC0311D065A748FABE35E813F6344757"/>
+    <ROW Registry="Path" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="Path" Value="[APPDIR]" Component_="ProductInformation"/>
+    <ROW Registry="Version" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="Version" Value="[ProductVersion]" Component_="ProductInformation"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiRemoveFileComponent">
+    <ROW FileKey="_" Component_="Agent.Core.dll" DirProperty="APPDIR" InstallMode="2"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiServCtrlComponent">
+    <ROW ServiceControl="Agent.RV.Service.exe" Name="TpaService" Event="161" Wait="1" Component_="Agent.RV.Service.exe"/>
+    <ROW ServiceControl="Agent.RV.WatcherService.exe" Name="TpaMaintenance" Event="161" Wait="1" Component_="Agent.RV.WatcherService.exe"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiServInstComponent">
+    <ROW ServiceInstall="Agent.RV.Service.exe" Name="TpaService" DisplayName="TpaService" ServiceType="16" StartType="2" ErrorControl="32769" Component_="Agent.RV.Service.exe" Description="TopPatch RV agent service."/>
+    <ROW ServiceInstall="Agent.RV.WatcherService.exe" Name="TpaMaintenance" DisplayName="TpaMaintenance" ServiceType="16" StartType="2" ErrorControl="32769" Component_="Agent.RV.WatcherService.exe" Description="TopPatch RV agent maintenance service"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiThemeComponent">
+    <ATTRIBUTE name="UsedTheme" value="classic"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiUpgradeComponent">
+    <ROW UpgradeCode="[|UpgradeCode]" VersionMax="[|ProductVersion]" Attributes="1025" ActionProperty="OLDPRODUCTS"/>
+    <ROW UpgradeCode="[|UpgradeCode]" VersionMin="[|ProductVersion]" Attributes="2" ActionProperty="AI_NEWERPRODUCTFOUND"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.PreReqComponent">
+    <ROW PrereqKey="CC0311D065A748FABE35E813F6344757" DisplayName=".NET Framework 3.5 SP1" VersionMin="3.5" SetupFileUrl=".NET Framework 3.5 SP1\dotnetfx35setup.exe" Location="0" ExactSize="0" WinNTVersions="Windows 2000, Windows 2000 Service Pack 1, Windows 2000 Service Pack 2, Windows 2000 Service Pack 3, Windows 2000 Service Pack 4, Windows XP x86, Windows XP x86 Service Pack 1, Windows Server 2008 x86, Windows 8 x86, Windows 8.1 x86" WinNT64Versions="Windows Server 2008 x64, Windows Server 2008 R2 x64, Windows Server 2008 R2 x64 Service Pack 1, Windows 8 x64, Windows Server 2012 x64, Windows 8.1 x64" Operator="1" ComLine="/qb" BasicUiComLine="/qb" NoUiComLine="/qb" Options="maz" TargetName="dotnetfx35setup.exe" Type="1" Feature="CC0311D065A748FABE35E813F6344757"/>
+    <ATTRIBUTE name="PrereqsOrder" value="CC0311D065A748FABE35E813F6344757"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.PreReqSearchComponent">
+    <ROW SearchKey="CC0311D065A748FABE35E813F6344757_NET_35_SP1_SEARCH" Prereq="CC0311D065A748FABE35E813F6344757" SearchType="9" SearchString="HKLM\SOFTWARE\Microsoft\NET Framework Setup\NDP\v3.5\SP" RefContent="M1" Order="1" Property="AI_NET_35SP1_ORIGINAL_PREREQSEARCH_PROP_CC0311D065A748FABE35E813F6344757"/>
+    <ROW SearchKey="CC0311D065A748FABE35E813F6344757_NET_40_SEARCH" Prereq="CC0311D065A748FABE35E813F6344757" SearchType="2" SearchString="HKLM\SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\Version" VerMin="4.0" Order="3" Property="AI_NET_35SP1_40_PREREQSEARCH_PROP_CC0311D065A748FABE35E813F6344757"/>
+    <ROW SearchKey="CC0311D065A748FABE35E813F6344757_NET_45_SEARCH" Prereq="CC0311D065A748FABE35E813F6344757" SearchType="2" SearchString="HKLM\SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\Version" VerMin="4.5" Order="4" Property="AI_NET_35SP1_45_PREREQSEARCH_PROP_CC0311D065A748FABE35E813F6344757"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.WinOptionalFeatureBundleComponent">
+    <ROW Name="Server2012s" FeatureList="NetFx3" OSTargets="160" Condition="1" Flags="0"/>
+    <ROW Name="Win8_Server2008s" FeatureList="NetFx3" OSTargets="92" Condition="1" Flags="0"/>
+  </COMPONENT>
+</DOCUMENT>
